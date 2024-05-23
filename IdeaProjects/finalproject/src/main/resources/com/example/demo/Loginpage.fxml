@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Loginpage">
    <children>
       <ImageView fitHeight="400.0" fitWidth="718.0" pickOnBounds="true" preserveRatio="true">
          <image>
@@ -19,8 +19,8 @@
       </ImageView>
       <AnchorPane layoutX="145.0" layoutY="40.0" prefHeight="320.0" prefWidth="326.0" style="-fx-background-color: rgba(0 , 0 , 0 , 0.2); -fx-border-color: rgba(240,184,2,0.7); -fx-border-radius: 10;">
          <children>
-            <TextField layoutX="86.0" layoutY="60.0" promptText="Username" style="-fx-background-color: rgba(0, 0 ,0,0.3);" />
-            <PasswordField layoutX="87.0" layoutY="97.0" promptText="Password" style="-fx-background-color: rgba(0, 0, 0,0.3);" />
+            <TextField fx:id="Username" layoutX="86.0" layoutY="60.0" promptText="Username" style="-fx-background-color: rgba(0, 0 ,0,0.3);" />
+            <PasswordField fx:id="Password" layoutX="87.0" layoutY="97.0" promptText="Password" style="-fx-background-color: rgba(0, 0, 0,0.3);" />
             <Label layoutX="131.0" layoutY="7.0" text="Login" textFill="#faf6f6">
                <font>
                   <Font size="25.0" />
@@ -42,15 +42,15 @@
                   <Image url="@images/captcha.jpg" />
                </image>
             </ImageView>
-            <TextField layoutX="111.0" layoutY="178.0" prefHeight="26.0" prefWidth="90.0" promptText="Code" style="-fx-background-color: rgba(250,250,250,0.3);">
+            <TextField fx:id="CAPTCHA" layoutX="111.0" layoutY="178.0" prefHeight="26.0" prefWidth="90.0" promptText="Code" style="-fx-background-color: rgba(250,250,250,0.3);">
                <font>
                   <Font size="11.0" />
                </font>
             </TextField>
-            <Button layoutX="81.0" layoutY="216.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" style="-fx-background-radius: 10; -fx-background-color: #7707b8;" text="Submit" />
+            <Button fx:id="submit" layoutX="81.0" layoutY="216.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" style="-fx-background-radius: 10; -fx-background-color: #7707b8;" text="Submit" />
             <Label layoutX="35.0" layoutY="258.0" text="Not a member?" textFill="#f7f3f3" />
-            <Button layoutX="130.0" layoutY="254.0" mnemonicParsing="false" style="-fx-background-radius: 10; -fx-background-color: #0c7039;" text="Sign Up" />
-            <Button layoutX="200.0" layoutY="254.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" style="-fx-background-radius: 10; -fx-background-color: #737a76;" text="Forgot Password" />
+            <Button fx:id="signup" layoutX="130.0" layoutY="254.0" mnemonicParsing="false" style="-fx-background-radius: 10; -fx-background-color: #0c7039;" text="Sign Up" />
+            <Button fx:id="forgotpass" layoutX="200.0" layoutY="254.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" style="-fx-background-radius: 10; -fx-background-color: #737a76;" text="Forgot Password" />
          </children>
       </AnchorPane>
    </children>
