@@ -15,11 +15,11 @@
             <Image url="@images/signupBackground.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="150.0" layoutY="100.0" prefHeight="374.0" prefWidth="563.0" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 15;">
+      <AnchorPane layoutX="150.0" layoutY="100.0" prefHeight="374.0" prefWidth="563.0" style="-fx-background-color: rgba(0,0,0,0.7); -fx-background-radius: 15;">
          <children>
-            <Label layoutX="231.0" layoutY="21.0" text="Welecome" textFill="WHITE">
+            <Label layoutX="236.0" layoutY="26.0" text="Welecome" textFill="WHITE">
                <font>
-                  <Font name="System Bold Italic" size="21.0" />
+                  <Font name="Times New Roman" size="21.0" />
                </font>
             </Label>
             <TextField layoutX="57.0" layoutY="80.0" prefHeight="26.0" prefWidth="135.0" promptText="username" />
@@ -55,11 +55,21 @@
                </image>
             </ImageView>
             <TextField layoutX="206.0" layoutY="278.0" promptText="captcha" />
-            <ImageView fitHeight="39.0" fitWidth="102.0" layoutX="240.0" layoutY="221.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="captchaPhoto" fitHeight="39.0" fitWidth="102.0" layoutX="264.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/captcha.jpg" />
                </image>
             </ImageView>
+            <ImageView fitHeight="39.0" fitWidth="27.0" layoutX="223.0" layoutY="214.0" onMouseClicked="#reCaptchaMake" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/captcha.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="206.0" layoutY="263.0" text="Enter CAPTCHA Code :" textFill="#cfc0c0">
+               <font>
+                  <Font name="Times New Roman" size="11.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

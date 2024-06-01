@@ -1,73 +1,79 @@
 package com.example.demo;
 
+import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics2D;
+import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class Loginpage implements Initializable{
 
-    private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    @FXML private PasswordField passField;
 
-    @FXML private PasswordField Password;
+    @FXML private TextField usernameField ,captchaTxtField;
 
-    @FXML private TextField Username , CAPTCHA;
+    @FXML private Button forgotPassBtn , signupBtn , submitBtn;
 
-    @FXML private Button forgotpass , signup , submit;
 
+    @FXML private ImageView captchaPhoto ;
     @Override
     public void initialize(URL location, ResourceBundle resources){
 
-        submit.setOnMouseEntered(e -> submit.setStyle("-fx-background-color: #6e038c; -fx-background-radius: 10;"));
-        submit.setOnMouseExited(e -> submit.setStyle("-fx-background-color:  #7707b8; -fx-background-radius: 10;"));
+        submitBtn.setOnMouseEntered(e -> submitBtn.setStyle("-fx-background-color: #6e038c; -fx-background-radius: 10;"));
+        submitBtn.setOnMouseExited(e -> submitBtn.setStyle("-fx-background-color:  #7707b8; -fx-background-radius: 10;"));
 
-        signup.setOnMouseEntered(e -> signup.setStyle("-fx-background-color: #025922; -fx-background-radius: 10;"));
-        signup.setOnMouseExited(e -> signup.setStyle("-fx-background-color:  #0c7039; -fx-background-radius: 10;"));
+        signupBtn.setOnMouseEntered(e -> signupBtn.setStyle("-fx-background-color: #025922; -fx-background-radius: 10;"));
+        signupBtn.setOnMouseExited(e -> signupBtn.setStyle("-fx-background-color:  #0c7039; -fx-background-radius: 10;"));
 
-        forgotpass.setOnMouseEntered(e -> forgotpass.setStyle("-fx-background-color:  #474747; -fx-background-radius: 10;"));
-        forgotpass.setOnMouseExited(e -> forgotpass.setStyle("-fx-background-color:   #737a76; -fx-background-radius: 10;"));
+        forgotPassBtn.setOnMouseEntered(e -> forgotPassBtn.setStyle("-fx-background-color:  #474747; -fx-background-radius: 10;"));
+        forgotPassBtn.setOnMouseExited(e -> forgotPassBtn.setStyle("-fx-background-color:   #737a76; -fx-background-radius: 10;"));
 
     }
-    public static void captcha(){
 
-        int width = 90;
-        int height = 42;
+    public void reCaptchaMake(MouseEvent mouseEvent) {
+        CaptchaMaker.captcha();
 
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics = image.createGraphics();
-
-        graphics.setColor(Color.BLACK);
-        graphics.fillRect(0, 0, width, height);
-
-        Random random = new Random();
-        StringBuilder captcha = new StringBuilder();
-
-        for (int i = 0; i < 5; i++) {
-            char ch = CHARACTERS.charAt(random.nextInt(CHARACTERS.length()));
-            captcha.append(ch);
-            graphics.setColor(new Color(random.nextInt(25 ,255), random.nextInt(25 , 255), random.nextInt(25 , 255)));
-            graphics.setFont(new Font("Arial", Font.BOLD, 20));
-            graphics.rotate(Math.toRadians(random.nextInt(-5, 5)), 5 + i * 17, 25);
-            graphics.drawString(String.valueOf(ch), 5 + i * 17, 25);
-        }
-
+        File img = new File("src\\main\\resources\\com\\example\\demo\\images\\captcha.jpg");
+        InputStream isImage = null;
         try {
-            ImageIO.write(image, "jpg", new File("C:\\Users\\User\\IdeaProjects\\finalproject\\src\\main\\resources\\com\\example\\demo\\images\\captcha.jpg"));
-        } catch (IOException e) {
+            isImage = (InputStream) new FileInputStream(img);
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
         }
-
+        captchaPhoto.setImage(new Image(isImage));
     }
 
+    public void goToSignUpPage(ActionEvent actionEvent) {
+        try {
+            Stage stage1 = (Stage) signupBtn.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("Signup.fxml"));
+
+            Scene signupScene = new Scene(root ) ;
+
+            stage1.setScene(signupScene);
+            stage1.centerOnScreen();
+            stage1.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
