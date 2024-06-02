@@ -33,7 +33,6 @@ public class Loginpage implements Initializable{
 
     @FXML private Button forgotPassBtn , signupBtn , submitBtn;
 
-
     @FXML private ImageView captchaPhoto ;
     @Override
     public void initialize(URL location, ResourceBundle resources){
