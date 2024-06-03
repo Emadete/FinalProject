@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -31,7 +32,10 @@ public class Loginpage implements Initializable{
 
     @FXML private TextField usernameField ,captchaTxtField;
 
-    @FXML private Button forgotPassBtn , signupBtn , submitBtn;
+    @FXML private Button forgotPassBtn , submitBtn;
+
+    @FXML
+    private Hyperlink signupBtn ;
 
     @FXML private ImageView captchaPhoto ;
     @Override
@@ -39,9 +43,6 @@ public class Loginpage implements Initializable{
 
         submitBtn.setOnMouseEntered(e -> submitBtn.setStyle("-fx-background-color: #6e038c; -fx-background-radius: 10;"));
         submitBtn.setOnMouseExited(e -> submitBtn.setStyle("-fx-background-color:  #7707b8; -fx-background-radius: 10;"));
-
-        signupBtn.setOnMouseEntered(e -> signupBtn.setStyle("-fx-background-color: #025922; -fx-background-radius: 10;"));
-        signupBtn.setOnMouseExited(e -> signupBtn.setStyle("-fx-background-color:  #0c7039; -fx-background-radius: 10;"));
 
         forgotPassBtn.setOnMouseEntered(e -> forgotPassBtn.setStyle("-fx-background-color:  #474747; -fx-background-radius: 10;"));
         forgotPassBtn.setOnMouseExited(e -> forgotPassBtn.setStyle("-fx-background-color:   #737a76; -fx-background-radius: 10;"));
