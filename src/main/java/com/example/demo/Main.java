@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         CaptchaMaker.captcha() ;
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Loginpage.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("HomePage.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setResizable(false);
