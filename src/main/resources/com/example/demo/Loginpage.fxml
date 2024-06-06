@@ -50,13 +50,14 @@
             </TextField>
             <Button fx:id="submitBtn" layoutX="81.0" layoutY="216.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="150.0" style="-fx-background-radius: 10; -fx-background-color: #7707b8;" text="Submit" textFill="#d9c9c9" />
             <Label layoutX="35.0" layoutY="258.0" text="Not a member?" textFill="#f7f3f3" />
-            <Button fx:id="forgotPassBtn" layoutX="200.0" layoutY="254.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="105.0" style="-fx-background-radius: 10; -fx-background-color: #737a76;" text="Forgot Password" />
             <ImageView fitHeight="36.0" fitWidth="27.0" layoutX="81.0" layoutY="139.0" onMouseClicked="#reCaptchaMake" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/captcha.png" />
                </image>
             </ImageView>
             <Hyperlink fx:id="signupBtn" layoutX="132.0" layoutY="255.0" onAction="#goToSignUpPage" text="SignUp" underline="true" />
+            <Hyperlink layoutX="209.0" layoutY="255.0" text="Forgot Password" underline="true" />
+            <Label layoutX="187.0" layoutY="258.0" text="or" textFill="#f7f3f3" />
          </children>
       </AnchorPane>
       <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" />

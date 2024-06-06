@@ -7,6 +7,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="575.0" prefWidth="826.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Signup">
@@ -16,7 +17,7 @@
             <Image url="@images/signupBackground.jpg" />
          </image>
       </ImageView>
-      <AnchorPane layoutX="150.0" layoutY="100.0" prefHeight="374.0" prefWidth="563.0" style="-fx-background-color: rgba(0,0,0,0.7); -fx-background-radius: 15;">
+      <AnchorPane layoutX="150.0" layoutY="100.0" prefHeight="374.0" prefWidth="563.0" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 15;">
          <children>
             <Label layoutX="236.0" layoutY="26.0" text="Welecome" textFill="WHITE">
                <font>
@@ -72,6 +73,7 @@
                </font>
             </Label>
             <Hyperlink layoutX="329.0" layoutY="321.0" onAction="#goTOLoginPage" text="Login" underline="true" />
+            <Line endX="100.0" layoutX="282.0" layoutY="59.0" startX="-100.0" stroke="#d07bd7" strokeWidth="4.0" />
          </children>
       </AnchorPane>
    </children>
