@@ -32,7 +32,7 @@ public class Loginpage implements Initializable{
 
     @FXML private TextField usernameField ,captchaTxtField;
 
-    @FXML private Button forgotPassBtn , submitBtn;
+    @FXML private Button submitBtn;
 
     @FXML
     private Hyperlink signupBtn ;
@@ -43,9 +43,6 @@ public class Loginpage implements Initializable{
 
         submitBtn.setOnMouseEntered(e -> submitBtn.setStyle("-fx-background-color: #6e038c; -fx-background-radius: 10;"));
         submitBtn.setOnMouseExited(e -> submitBtn.setStyle("-fx-background-color:  #7707b8; -fx-background-radius: 10;"));
-
-        forgotPassBtn.setOnMouseEntered(e -> forgotPassBtn.setStyle("-fx-background-color:  #474747; -fx-background-radius: 10;"));
-        forgotPassBtn.setOnMouseExited(e -> forgotPassBtn.setStyle("-fx-background-color:   #737a76; -fx-background-radius: 10;"));
 
     }
 
@@ -66,6 +63,22 @@ public class Loginpage implements Initializable{
         try {
             Stage stage1 = (Stage) signupBtn.getScene().getWindow();
             Parent root = FXMLLoader.load(getClass().getResource("Signup.fxml"));
+
+            Scene signupScene = new Scene(root ) ;
+
+            stage1.setScene(signupScene);
+            stage1.centerOnScreen();
+            stage1.show();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    public void forgotPassAction (ActionEvent actionEvent) {
+        try {
+            Stage stage1 = (Stage) signupBtn.getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("ForgotPass.fxml"));
 
             Scene signupScene = new Scene(root ) ;
 
