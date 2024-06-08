@@ -46,7 +46,7 @@
                   <Image url="@images/lockicon.png" />
                </image>
             </ImageView>
-            <Button layoutX="244.0" layoutY="318.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" style="-fx-background-color: #D07BD7D2 ;" text="Submit" textFill="WHITE">
+            <Button layoutX="244.0" layoutY="318.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" style="-fx-background-color: #D07BD7D2; -fx-background-radius: 10;" text="Submit" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
