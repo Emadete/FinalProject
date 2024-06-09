@@ -10,9 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="584.0" prefWidth="876.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ForgotPass">
+<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ForgotPass">
    <children>
-      <AnchorPane fx:id="panel1" prefHeight="584.0" prefWidth="876.0" style="-fx-background-color: rgba(41,30,86,0.6);">
+      <AnchorPane fx:id="panel1" layoutX="1.0" prefHeight="584.0" prefWidth="876.0" style="-fx-background-color: rgba(41,30,86,0.6);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="348.0" layoutY="158.0" text="Forgot password?">
                <font>
@@ -39,7 +39,7 @@
             </Hyperlink>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="panel2" prefHeight="584.0" prefWidth="876.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false">
+      <AnchorPane fx:id="panel2" prefHeight="584.0" prefWidth="876.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="46.0" fitWidth="65.0" layoutX="403.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="403.0" AnchorPane.rightAnchor="426.8">
                <image>
@@ -91,7 +91,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="panel3" prefHeight="584.0" prefWidth="877.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false">
+      <AnchorPane fx:id="panel3" prefHeight="584.0" prefWidth="877.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <ImageView fitHeight="46.0" fitWidth="65.0" layoutX="417.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -134,7 +134,7 @@
             <PasswordField fx:id="conPassFlied" layoutX="314.0" layoutY="335.0" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: white; -fx-background-radius: 5;" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="panel4" prefHeight="584.0" prefWidth="878.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false">
+      <AnchorPane fx:id="panel4" prefHeight="584.0" prefWidth="878.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="334.0" layoutY="161.0" text="Password reset">
                <font>
