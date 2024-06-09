@@ -24,13 +24,13 @@
                   <Font name="Times New Roman" size="21.0" />
                </font>
             </Label>
-            <TextField layoutX="57.0" layoutY="80.0" prefHeight="26.0" prefWidth="135.0" promptText="Username" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
-            <TextField layoutX="213.0" layoutY="79.0" prefHeight="26.0" prefWidth="135.0" promptText="First name" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
-            <TextField layoutX="375.0" layoutY="80.0" prefHeight="26.0" prefWidth="135.0" promptText="Last name" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
-            <TextField layoutX="333.0" layoutY="174.0" prefHeight="26.0" prefWidth="186.0" promptText="Repass" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
-            <TextField layoutX="333.0" layoutY="131.0" prefHeight="0.0" prefWidth="186.0" promptText="Password" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
-            <TextField layoutX="57.0" layoutY="131.0" prefHeight="26.0" prefWidth="186.0" promptText="Email" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
-            <TextField layoutX="57.0" layoutY="174.0" prefHeight="26.0" prefWidth="186.0" promptText="Phone number" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
+            <TextField fx:id="Username" layoutX="57.0" layoutY="80.0" prefHeight="26.0" prefWidth="135.0" promptText="Username" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
+            <TextField fx:id="name" layoutX="213.0" layoutY="79.0" prefHeight="26.0" prefWidth="135.0" promptText="First name" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
+            <TextField fx:id="lastname" layoutX="375.0" layoutY="80.0" prefHeight="26.0" prefWidth="135.0" promptText="Last name" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
+            <TextField fx:id="repass" layoutX="333.0" layoutY="174.0" prefHeight="26.0" prefWidth="186.0" promptText="Repass" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
+            <TextField fx:id="pass" layoutX="333.0" layoutY="131.0" prefHeight="0.0" prefWidth="186.0" promptText="Password" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
+            <TextField fx:id="email" layoutX="57.0" layoutY="131.0" prefHeight="26.0" prefWidth="186.0" promptText="Email" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
+            <TextField fx:id="phonenumber" layoutX="57.0" layoutY="174.0" prefHeight="26.0" prefWidth="186.0" promptText="Phone number" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
             <ImageView fitHeight="39.0" fitWidth="39.0" layoutX="8.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/user-icon.png" />
@@ -46,7 +46,7 @@
                   <Image url="@images/lockicon.png" />
                </image>
             </ImageView>
-            <Button layoutX="244.0" layoutY="318.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" style="-fx-background-color: #D07BD7D2; -fx-background-radius: 10;" text="Submit" textFill="WHITE">
+            <Button layoutX="244.0" layoutY="318.0" mnemonicParsing="false" onAction="#addUser" prefHeight="26.0" prefWidth="74.0" style="-fx-background-color: #D07BD7D2; -fx-background-radius: 10;" text="Submit" textFill="WHITE">
                <font>
                   <Font size="14.0" />
                </font>
@@ -56,7 +56,7 @@
                   <Image url="@images/phone_icon.png" />
                </image>
             </ImageView>
-            <TextField layoutX="206.0" layoutY="278.0" promptText="Captcha" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
+            <TextField fx:id="captcha" layoutX="206.0" layoutY="278.0" promptText="Captcha" style="-fx-background-color: rgba(0,0,0,0.5); -fx-background-radius: 7;" />
             <ImageView fx:id="captchaPhoto" fitHeight="39.0" fitWidth="102.0" layoutX="264.0" layoutY="208.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@images/captcha.jpg" />

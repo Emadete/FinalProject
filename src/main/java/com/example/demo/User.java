@@ -12,7 +12,7 @@ public class User {
     private String password ;
     private String phoneNumber ;
 
-    public User(String firstname, String lastname, String userName, String email, String password, String phoneNumber) {
+    public User(String firstname, String lastname, String userName, String email, String phoneNumber, String password) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.userName = userName;
@@ -46,7 +46,7 @@ public class User {
     }
 
     public static boolean checkPhoneNum (String phoneNumber) {
-        Pattern pattern = Pattern.compile("^0[0-9]\\d{11}$");
+        Pattern pattern = Pattern.compile("^[0-9]\\d{10}$");
         Matcher matcher = pattern.matcher(phoneNumber);
 
         return matcher.find();

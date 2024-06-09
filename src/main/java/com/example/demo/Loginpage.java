@@ -21,6 +21,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.net.URL;
+import java.sql.*;
 import java.util.Random;
 import java.util.ResourceBundle;
 import javax.imageio.ImageIO;
@@ -89,4 +90,43 @@ public class Loginpage implements Initializable{
             throw new RuntimeException(e);
         }
     }
+
+    public void checkuser(ActionEvent actionEvent){
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String Username = "root";
+        String Password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, Username, Password)){
+            String query = "SELECT * FROM user WHERE username = '" + usernameField.getText() + "' OR password = '" + passField.getText() + "'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String firstname = resultSet.getString("firstname");
+                String lastname = resultSet.getString("lastname");
+                String username = resultSet.getString("username");
+                String email = resultSet.getString("email");
+                String phonenumber = resultSet.getString("phonenumber");
+                String password = resultSet.getString("password");
+
+                User user =new User(firstname , lastname , username , email , phonenumber , password);
+            }
+            try {
+                Stage stage1 = (Stage) signupBtn.getScene().getWindow();
+                Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+
+                Scene dasboardScene = new Scene(root);
+
+                stage1.setScene(dasboardScene);
+                stage1.centerOnScreen();
+                stage1.show();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
 }
