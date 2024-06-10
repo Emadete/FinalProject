@@ -18,6 +18,7 @@ public class Main extends Application {
         Image icon = new Image(Main.class.getResourceAsStream("/com/example/demo/images/icon.png"));
         stage.getIcons().add(icon);
         stage.setResizable(false);
+        stage.initStyle(StageStyle.UNDECORATED);
         stage.setTitle("My Wallet");
         stage.setScene(scene);
         stage.show();

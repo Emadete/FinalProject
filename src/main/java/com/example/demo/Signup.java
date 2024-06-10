@@ -23,7 +23,7 @@ import java.awt.*;
 import java.io.*;
 import java.util.ResourceBundle;
 
-public class Signup{
+public class Signup implements Initializable {
 
     @FXML
     private TextField captcha;
@@ -137,4 +137,8 @@ public class Signup{
 
     }
 
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        reCaptchaMake( null );
+    }
 }

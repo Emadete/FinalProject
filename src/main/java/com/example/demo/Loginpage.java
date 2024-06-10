@@ -29,6 +29,8 @@ import javax.swing.*;
 
 public class Loginpage implements Initializable{
 
+    private User user ;
+
     @FXML private PasswordField passField;
 
     @FXML private TextField usernameField ,captchaTxtField;
@@ -41,6 +43,8 @@ public class Loginpage implements Initializable{
     @FXML private ImageView captchaPhoto ;
     @Override
     public void initialize(URL location, ResourceBundle resources){
+
+        reCaptchaMake(null);
 
         submitBtn.setOnMouseEntered(e -> submitBtn.setStyle("-fx-background-color: #6e038c; -fx-background-radius: 10;"));
         submitBtn.setOnMouseExited(e -> submitBtn.setStyle("-fx-background-color:  #7707b8; -fx-background-radius: 10;"));
@@ -109,19 +113,21 @@ public class Loginpage implements Initializable{
                 String phonenumber = resultSet.getString("phonenumber");
                 String password = resultSet.getString("password");
 
-                User user =new User(firstname , lastname , username , email , phonenumber , password);
+                user =new User(firstname , lastname , username , email , phonenumber , password);
             }
-            try {
-                Stage stage1 = (Stage) signupBtn.getScene().getWindow();
-                Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
+            if( user != null ) {
+                try {
+                    Stage stage1 = (Stage) signupBtn.getScene().getWindow();
+                    Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
 
-                Scene dasboardScene = new Scene(root);
+                    Scene dasboardScene = new Scene(root);
 
-                stage1.setScene(dasboardScene);
-                stage1.centerOnScreen();
-                stage1.show();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+                    stage1.setScene(dasboardScene);
+                    stage1.centerOnScreen();
+                    stage1.show();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
