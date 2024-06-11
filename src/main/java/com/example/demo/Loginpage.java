@@ -29,7 +29,7 @@ import javax.swing.*;
 
 public class Loginpage implements Initializable{
 
-    private User user ;
+    public static User user ;
 
     @FXML private PasswordField passField;
 
