@@ -89,44 +89,46 @@ public class Signup implements Initializable {
                         if(User.checkPass(pass.getText())){
                             if(pass.getText().equals(repass.getText())){
 
-                                String url = "jdbc:mysql://localhost:3306/exchangedb";
-                                String username = "root";
-                                String password = "123456";
+                                if (captcha.getText().equals(CaptchaMaker.CAPTCHA)) {
+                                    String url = "jdbc:mysql://localhost:3306/exchangedb";
+                                    String username = "root";
+                                    String password = "123456";
 
-                                try (Connection conn = DriverManager.getConnection(url, username, password)) {
+                                    try (Connection conn = DriverManager.getConnection(url, username, password)) {
 
-                                    String sql = "INSERT INTO user (firstname, lastname, username, email, phonenumber, password) VALUES (?, ?, ?, ?, ?, ?)";
-                                    PreparedStatement pstmt = conn.prepareStatement(sql);
-                                    pstmt.setString(1, name.getText());
-                                    pstmt.setString(2, lastname.getText());
-                                    pstmt.setString(3, Username.getText());
-                                    pstmt.setString(4, email.getText());
-                                    pstmt.setString(5, phonenumber.getText());
-                                    pstmt.setString(6, pass.getText());
+                                        String sql = "INSERT INTO user (firstname, lastname, username, email, phonenumber, password) VALUES (?, ?, ?, ?, ?, ?)";
+                                        PreparedStatement pstmt = conn.prepareStatement(sql);
+                                        pstmt.setString(1, name.getText());
+                                        pstmt.setString(2, lastname.getText());
+                                        pstmt.setString(3, Username.getText());
+                                        pstmt.setString(4, email.getText());
+                                        pstmt.setString(5, phonenumber.getText());
+                                        pstmt.setString(6, pass.getText());
 
-                                    try {
-                                        Stage stage1 = (Stage) captchaPhoto.getScene().getWindow();
-                                        Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
+                                        try {
+                                            Stage stage1 = (Stage) captchaPhoto.getScene().getWindow();
+                                            Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
 
-                                        Scene signupScene = new Scene(root ) ;
+                                            Scene signupScene = new Scene(root ) ;
 
-                                        stage1.setScene(signupScene);
-                                        stage1.centerOnScreen();
-                                        stage1.show();
-                                    } catch (IOException e) {
-                                        throw new RuntimeException(e);
+                                            stage1.setScene(signupScene);
+                                            stage1.centerOnScreen();
+                                            stage1.show();
+                                        } catch (IOException e) {
+                                            throw new RuntimeException(e);
+                                        }
+
+                                        int affectedRows = pstmt.executeUpdate();
+
+                                        if (affectedRows > 0) {
+                                            System.out.println("Data inserted successfully.");
+                                        } else {
+                                            System.out.println("Failed to insert data.");
+                                        }
+
+                                    } catch (SQLException e) {
+                                        System.err.println("Error: " + e.getMessage());
                                     }
-
-                                    int affectedRows = pstmt.executeUpdate();
-
-                                    if (affectedRows > 0) {
-                                        System.out.println("Data inserted successfully.");
-                                    } else {
-                                        System.out.println("Failed to insert data.");
-                                    }
-
-                                } catch (SQLException e) {
-                                    System.err.println("Error: " + e.getMessage());
                                 }
                             }
                         }

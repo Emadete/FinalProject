@@ -16,6 +16,7 @@ import javax.mail.internet.MimeMessage;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.io.IOException;
+import java.sql.*;
 import java.util.Properties;
 import java.util.Random;
 
@@ -139,10 +140,35 @@ public class ForgotPass {
     }
 
     public void sentMailBtn(ActionEvent actionEvent) {
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String Username = "root";
+        String Password = "123456";
+
         if (!checkEmailValid()) return ;
-        send(EmailField.getText(),generateRandomPassword());
-        panel1.setVisible(false);
-        panel2.setVisible(true);
+        try (Connection connection = DriverManager.getConnection(url, Username, Password)) {
+            String sql = "SELECT * FROM user WHERE email = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setString(1, EmailField.getText());
+                ResultSet resultSet = statement.executeQuery();
+                if (resultSet.next()) {
+//                    txtName.setText(resultSet.getString("firstname"));
+//                    txtLastName.setText(resultSet.getString("lastname"));
+//                    txtPhoneNumber.setText(resultSet.getString("phonenumber"));
+//                    txtEmail.setText(resultSet.getString("email"));
+//                    txtPassword.setText(resultSet.getString("password"));
+//                    txtWallet_id.setText(resultSet.getString("walletid"));
+//                    txtUsername.setText(thisUsername);
+                    send(EmailField.getText(),generateRandomPassword());
+                    panel1.setVisible(false);
+                    panel2.setVisible(true);
+
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML

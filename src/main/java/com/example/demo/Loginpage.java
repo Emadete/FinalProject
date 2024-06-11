@@ -115,7 +115,7 @@ public class Loginpage implements Initializable{
 
                 user =new User(firstname , lastname , username , email , phonenumber , password);
             }
-            if( user != null ) {
+            if( user != null && captchaTxtField.getText().equals(CaptchaMaker.CAPTCHA)) {
                 try {
                     Stage stage1 = (Stage) signupBtn.getScene().getWindow();
                     Parent root = FXMLLoader.load(getClass().getResource("Dashboard.fxml"));
