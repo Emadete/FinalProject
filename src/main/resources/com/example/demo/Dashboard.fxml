@@ -10,7 +10,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="594.0" prefWidth="872.0" style="-fx-background-color: #291e56;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Dashboard">
+<AnchorPane prefHeight="594.0" prefWidth="872.0" style="-fx-background-color: #291e56; -fx-border-color: #362782; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Dashboard">
    <children>
       <AnchorPane fx:id="menuPnl" layoutX="27.0" layoutY="20.0" prefHeight="554.0" prefWidth="146.0" style="-fx-background-color: #31297f; -fx-background-radius: 10;">
          <children>
@@ -109,6 +109,31 @@
                </children>
             </AnchorPane>
             <AnchorPane layoutX="517.0" layoutY="237.0" prefHeight="276.0" prefWidth="153.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="walletPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
+         <children>
+            <Label layoutX="300.0" layoutY="250.0" text="Wallet Pane" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="exchangePane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
+         <children>
+            <Label layoutX="300.0" layoutY="250.0" text="exchange pane" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="transferPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
+         <children>
+            <Label layoutX="300.0" layoutY="250.0" text="transfer pane" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="historyPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
+         <children>
+            <Label layoutX="300.0" layoutY="250.0" text="history pane" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="swapPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
+         <children>
+            <Label layoutX="300.0" layoutY="250.0" text="swap pane" />
          </children>
       </AnchorPane>
    </children>

@@ -13,7 +13,24 @@ public class Dashboard implements Initializable {
 
     @FXML
     private Text fullName;
-    private int selected ;
+    @FXML
+    private AnchorPane DashboardPane;
+
+    @FXML
+    private AnchorPane exchangePane;
+
+    @FXML
+    private AnchorPane historyPane;
+
+    @FXML
+    private AnchorPane walletPane;
+
+    @FXML
+    private AnchorPane swapPane;
+
+    @FXML
+    private AnchorPane transferPane;
+
     @FXML
     private Button dashboardId;
 
@@ -31,6 +48,7 @@ public class Dashboard implements Initializable {
 
     @FXML
     private Button transferId;
+    private int selected = 1 ;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -38,152 +56,98 @@ public class Dashboard implements Initializable {
 
     }
 
+    private void closeMenu () {
+        switch (selected) {
+            case 1 :
+                dashboardId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
+                DashboardPane.setVisible(false);
+            case 2:
+                myWalletId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
+                walletPane.setVisible(false);
+            case 3:
+                exchangeId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
+                exchangePane.setVisible(false);
+            case 4:
+                transferId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
+                transferPane.setVisible(false);
+            case 5:
+                historyId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
+                historyPane.setVisible(false);
+            case 6:
+                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
+                swapPane.setVisible(false);
+        }
+    }
+
 
     public void dashboardBtn(ActionEvent event) {
         Button b = (Button) event.getSource();
 
-        switch (selected) {
-            case 1 :
-                dashboardId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 2:
-                myWalletId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 3:
-                exchangeId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 4:
-                transferId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 5:
-                historyId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 6:
-                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-        }
-        if (selected != 1){
-            b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
-            selected = 1 ;
-        }
-    }
+        closeMenu();
 
-    @FXML
-    void exchangeBtn(ActionEvent event) {
-        Button b = (Button) event.getSource();
+        b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
+        selected = 1 ;
 
-        switch (selected) {
-            case 1 :
-                dashboardId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 2:
-                myWalletId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 3:
-                exchangeId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 4:
-                transferId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 5:
-                historyId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 6:
-                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-        }
-
-        if (selected != 3){
-            b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
-            selected = 3 ;
-        }
-    }
-
-    @FXML
-    void historyBtn(ActionEvent event) {
-        Button b = (Button) event.getSource();
-
-        switch (selected) {
-            case 1 :
-                dashboardId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 2:
-                myWalletId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 3:
-                exchangeId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 4:
-                transferId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 5:
-                historyId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 6:
-                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-        }
-
-        if (selected != 5){
-            b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
-            selected = 5 ;
-        }
+        DashboardPane.setVisible(true);
     }
 
     @FXML
     void myWalletBtn(ActionEvent event) {
         Button b = (Button) event.getSource();
 
-        switch (selected) {
-            case 1 :
-                dashboardId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 2:
-                myWalletId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 3:
-                exchangeId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 4:
-                transferId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 5:
-                historyId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 6:
-                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-        }
+        closeMenu();
 
-        if (selected != 2){
-            b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
-            selected = 2 ;
-        }
+        b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
+        selected = 2 ;
+
+        walletPane.setVisible(true);
     }
 
     @FXML
-    void swapBtn(ActionEvent event) {
+    void exchangeBtn(ActionEvent event) {
         Button b = (Button) event.getSource();
 
-        switch (selected) {
-            case 1 :
-                dashboardId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 2:
-                myWalletId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 3:
-                exchangeId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 4:
-                transferId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 5:
-                historyId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 6:
-                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-        }
+        closeMenu();
 
-        if (selected != 6){
-            b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
-            selected = 6 ;
-        }
+        b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
+        selected = 3 ;
+
+        exchangePane.setVisible(true);
     }
 
     @FXML
     void transferBtn(ActionEvent event) {
         Button b = (Button) event.getSource();
 
-        switch (selected) {
-            case 1 :
-                dashboardId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 2:
-                myWalletId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 3:
-                exchangeId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 4:
-                transferId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 5:
-                historyId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-            case 6:
-                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
-        }
+        closeMenu();
 
-        if (selected != 4){
-            b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 10;");
-            selected = 4 ;
-        }
+        b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
+        selected = 4 ;
+
+        transferPane.setVisible(true);
+    }
+
+    @FXML
+    void historyBtn(ActionEvent event) {
+        Button b = (Button) event.getSource();
+
+        closeMenu();
+
+        b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
+        selected = 5 ;
+
+        historyPane.setVisible(true);
+    }
+
+    @FXML
+    void swapBtn(ActionEvent event) {
+        Button b = (Button) event.getSource();
+
+        closeMenu();
+
+        b.setStyle("-fx-background-color: #605afa; -fx-background-radius: 7;");
+        selected = 6 ;
+
+        swapPane.setVisible(true);
     }
 }
