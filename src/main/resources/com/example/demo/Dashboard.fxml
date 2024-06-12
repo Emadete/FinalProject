@@ -126,27 +126,27 @@
                   </ImageView>
                   <Text fill="WHITE" layoutX="88.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BTC">
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
                   <Text fill="WHITE" layoutX="87.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ETH">
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
                   <Text fill="WHITE" layoutX="87.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" text="USDT">
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
                   <Text fill="WHITE" layoutX="89.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LTC">
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
                   <Text fill="WHITE" layoutX="86.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AVAX">
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
                </children></AnchorPane>
