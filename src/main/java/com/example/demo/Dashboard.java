@@ -84,11 +84,43 @@ public class Dashboard implements Initializable {
     @FXML
     private ImageView picture1;
 
+    @FXML
+    private Text emailtext;
+
+    @FXML
+    private Text firstnametext;
+
+    @FXML
+    private Text lastnametext;
+
+    @FXML
+    private Text passwordtext;
+
+    @FXML
+    private Text phonenumbertext;
+
+    @FXML
+    private Text usernametext;
+
+    @FXML
+    private Text idcard;
+
+    @FXML
+    private Text Cardholder;
+
     private int selected = 1 ;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fullName.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname()) ;
+        usernametext.setText(Loginpage.user.getUserName());
+        firstnametext.setText(Loginpage.user.getFirstname());
+        lastnametext.setText(Loginpage.user.getLastname());
+        passwordtext.setText(Loginpage.user.getPassword());
+        phonenumbertext.setText(Loginpage.user.getPhoneNumber());
+        emailtext.setText(Loginpage.user.getEmail());
+        Cardholder.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname());
+        idcard.setText("5892 1015 0405 8690");
 
     }
 
