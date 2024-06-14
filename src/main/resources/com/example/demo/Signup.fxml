@@ -64,6 +64,12 @@
             </ImageView>
             <Hyperlink layoutX="384.0" layoutY="305.0" onAction="#goTOLoginPage" text="Login" underline="true" />
             <Line endX="100.0" layoutX="282.0" layoutY="59.0" startX="-100.0" stroke="#7707b8" strokeWidth="4.0" />
+            <ImageView fitHeight="31.0" fitWidth="31.0" layoutX="47.0" layoutY="227.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@images/camera.png" />
+               </image>
+            </ImageView>
+            <Button fx:id="imageLink" layoutX="88.0" layoutY="230.0" mnemonicParsing="false" onAction="#chooseImage" style="-fx-background-color: #291e56; -fx-background-radius: 7;" text="Upload Image" textFill="WHITE" />
          </children>
       </AnchorPane>
    </children>

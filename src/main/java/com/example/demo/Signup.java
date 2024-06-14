@@ -10,6 +10,8 @@ import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 
@@ -51,6 +53,9 @@ public class Signup implements Initializable {
 
     @FXML
     private TextField Username;
+
+    @FXML
+    private Button imageLink;
 
     public void reCaptchaMake(MouseEvent mouseEvent) {
         CaptchaMaker.captcha();
@@ -142,5 +147,25 @@ public class Signup implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         reCaptchaMake( null );
+    }
+
+    @FXML
+    public void chooseImage(ActionEvent event) throws SQLException, FileNotFoundException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Select Image File");
+
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        File selectedFile = fileChooser.showOpenDialog(null);
+
+        if (selectedFile != null) {
+            Image image = new Image(selectedFile.toURI().toString());
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/exchangedb", "root", "123456");
+            String sql = "INSERT INTO user (image) VALUES (?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            FileInputStream fis = new FileInputStream(selectedFile);
+            pstmt.setBinaryStream(1, fis, selectedFile.length());
+        }
     }
 }

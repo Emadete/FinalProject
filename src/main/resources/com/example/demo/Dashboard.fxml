@@ -77,13 +77,11 @@
             <Image url="@images/search.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="35.0" fitWidth="40.0" layoutX="699.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="picture1" fitHeight="29.0" fitWidth="35.0" layoutX="701.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@images/male.png" />
          </image>
       </ImageView>
-      <Circle fill="#291e56" layoutX="717.0" layoutY="44.0" radius="18.0" stroke="#f3f2f7" strokeType="INSIDE" style="-fx-opacity: 0.3;" />
-      <Text fx:id="fullName" fill="#fff8ff" layoutX="745.0" layoutY="47.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Full Name" />
       <ImageView fitHeight="26.0" fitWidth="29.0" layoutX="588.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true" style="-fx-opacity: 0.7;">
          <image>
             <Image url="@images/mail.png" />
@@ -97,7 +95,7 @@
       <AnchorPane fx:id="DashboardPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0">
          <children>
             <AnchorPane layoutX="20.0" layoutY="39.0" prefHeight="174.0" prefWidth="474.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;" />
-            <AnchorPane layoutX="20.0" layoutY="238.0" prefHeight="276.0" prefWidth="474.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;">
+            <AnchorPane layoutX="20.0" layoutY="238.0" prefHeight="276.0" prefWidth="657.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;">
                <children>
                   <ImageView fitHeight="50.0" fitWidth="35.0" layoutX="32.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -124,12 +122,12 @@
                         <Image url="@images/lightcoin.png" />
                      </image>
                   </ImageView>
-                  <Text fill="WHITE" layoutX="88.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BTC">
+                  <Text fill="WHITE" layoutX="92.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="BTC">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="87.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ETH">
+                  <Text fill="WHITE" layoutX="92.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ETH">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -139,12 +137,12 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="89.0" layoutY="238.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LTC">
+                  <Text fill="WHITE" layoutX="93.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="LTC">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
-                  <Text fill="WHITE" layoutX="86.0" layoutY="190.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AVAX">
+                  <Text fill="WHITE" layoutX="86.0" layoutY="189.0" strokeType="OUTSIDE" strokeWidth="0.0" text="AVAX">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -160,7 +158,6 @@
                   <AnchorPane layoutX="16.0" layoutY="91.0" prefHeight="68.0" prefWidth="135.0" style="-fx-background-radius: 15; -fx-background-color: #1d124c;" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="517.0" layoutY="237.0" prefHeight="276.0" prefWidth="153.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="walletPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
@@ -186,6 +183,57 @@
       <AnchorPane fx:id="swapPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
          <children>
             <Label layoutX="300.0" layoutY="250.0" text="swap pane" />
+         </children>
+      </AnchorPane>
+      <Button fx:id="fullName" layoutX="738.0" layoutY="30.0" mnemonicParsing="false" onAction="#fullnameBtn" style="-fx-background-color: #291e56;" text="Full Name" textFill="#fff8ff" />
+      <AnchorPane fx:id="prof" layoutX="736.0" layoutY="59.0" prefHeight="90.0" prefWidth="80.0" style="-fx-background-color: #1d124c; -fx-background-radius: 10; -fx-border-color: #31297f; -fx-border-radius: 10;" visible="false">
+         <children>
+            <Button fx:id="profBtn" layoutX="13.0" layoutY="14.0" mnemonicParsing="false" onAction="#profBtn" prefHeight="27.0" prefWidth="54.0" style="-fx-background-color: #1d124c; -fx-border-color: #31297f; -fx-border-radius: 5;" text="Porfile" textFill="#fff8ff" />
+            <Button fx:id="logoutBtn" layoutX="12.0" layoutY="51.0" mnemonicParsing="false" onAction="#LogoutBtn" style="-fx-background-color: #1d124c; -fx-border-color: #31297f; -fx-border-radius: 5;" text="Logout" textFill="#fff8ff" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="ProfilePane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
+         <children>
+            <AnchorPane layoutX="27.0" layoutY="26.0" prefHeight="484.0" prefWidth="638.0" style="-fx-background-color: #1d124c; -fx-background-radius: 10;">
+               <children>
+                  <ImageView fx:id="picture" fitHeight="68.0" fitWidth="74.0" layoutX="57.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/camera.png" />
+                     </image>
+                  </ImageView>
+                  <Text fill="#59ccc5" layoutX="209.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Firstname :">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#59ccc5" layoutX="210.0" layoutY="143.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Lastname :">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#59ccc5" layoutX="209.0" layoutY="184.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password :">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#59ccc5" layoutX="210.0" layoutY="228.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phonenumber :">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#59ccc5" layoutX="210.0" layoutY="55.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username :">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fill="#59ccc5" layoutX="210.0" layoutY="277.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email :">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Button fx:id="imageLink" layoutX="41.0" layoutY="122.0" mnemonicParsing="false" onAction="#chooseImage" prefHeight="27.0" prefWidth="99.0" style="-fx-background-color: #1d124c; -fx-border-color: #31297f; -fx-border-radius: 5;" text="Upload Image" textFill="#fff8ff" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>
