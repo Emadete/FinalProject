@@ -104,12 +104,12 @@
          <children>
             <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="484.0" prefWidth="658.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;">
                <children>
-                  <TableView fx:id="currencyTable" layoutX="73.0" layoutY="62.0" prefHeight="360.0" prefWidth="512.0" stylesheets="@Theme.css">
+                  <TableView fx:id="currencyTable" layoutX="38.0" layoutY="60.0" prefHeight="386.0" prefWidth="582.0" stylesheets="@Theme.css">
                      <columns>
                         <TableColumn fx:id="photoColumn" prefWidth="70.0" />
                         <TableColumn fx:id="marketColumn" prefWidth="70.0" text="Market" />
-                        <TableColumn fx:id="priceColumn" prefWidth="75.0" text="Price" />
-                        <TableColumn fx:id="changesColumn" prefWidth="75.0" text="changes" />
+                        <TableColumn fx:id="priceColumn" prefWidth="110.0" text="Price" />
+                        <TableColumn fx:id="changesColumn" prefWidth="110.0" text="changes" />
                         <TableColumn fx:id="minColumn" prefWidth="110.0" text="min price (24h)" />
                         <TableColumn fx:id="maxColumn" prefWidth="110.0" text="max price (24h)" />
                      </columns>
@@ -117,7 +117,7 @@
                         <String fx:value="table-column" />
                         <String fx:value="table-row-cell" />
                         <String fx:value="root" />
-                        <String fx:value="table-view" />
+                        <String fx:value="column-header-background" />
                      </styleClass>
                   </TableView>
                </children>

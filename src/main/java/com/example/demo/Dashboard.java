@@ -30,6 +30,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
@@ -165,24 +166,6 @@ public class Dashboard implements Initializable {
 
     }
 
-//    public Image resizeImage(Image originalImage, int targetWidth, int targetHeight) {
-//        ImageView imageView = new ImageView(originalImage);
-//        imageView.setFitWidth(targetWidth);
-//        imageView.setFitHeight(targetHeight);
-//        imageView.setPreserveRatio(true);
-//
-//        WritableImage resizedImage = new WritableImage(targetWidth, targetHeight);
-//        PixelReader pixelReader = imageView.snapshot(null, null).getPixelReader();
-//
-//        for (int y = 0; y < targetHeight; y++) {
-//            for (int x = 0; x < targetWidth; x++) {
-//                resizedImage.getPixelWriter().setArgb(x, y, pixelReader.getArgb((int) (x), (int) (y)));
-//            }
-//        }
-//
-//        return resizedImage;
-//    }
-
     public void makeCurrencyTable (){
         photoColumn.setCellValueFactory( new PropertyValueFactory<>("photo"));
         marketColumn.setCellValueFactory( new PropertyValueFactory<>("name"));
@@ -212,6 +195,7 @@ public class Dashboard implements Initializable {
                         double ETHpr = resultSet.getDouble(6);
                         double AVAXpr = resultSet.getDouble(7);
 
+                        DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
                         if (USDT == null) {
                             Image image = new Image(Main.class.getResourceAsStream("/com/example/demo/images/tether1.png"));
@@ -219,7 +203,9 @@ public class Dashboard implements Initializable {
                             USDT = new Currency("USDT", USDTpr, imageView);
                             currencyTable.getItems().add(USDT);
                         }else {
-                            USDT.setPriceChange1m(Math.ceil(( (USDTpr-USDT.getPrice()) / USDT.getPrice() * 100)*100)/100);
+                            String formattedNumber = decimalFormat.format(Math.ceil(( (USDTpr-USDT.getPrice()) / USDT.getPrice() * 100)*100)/100);
+                            double result = Double.parseDouble(formattedNumber);
+                            USDT.setPriceChange1m(result);
                             USDT.setPrice(USDTpr);
                         }
                         if (LTC == null) {
@@ -228,7 +214,9 @@ public class Dashboard implements Initializable {
                             LTC = new Currency("LTC",LTCpr,imageView);
                             currencyTable.getItems().add(LTC) ;
                         }else {
-                            LTC.setPriceChange1m(Math.ceil(( (LTCpr-LTC.getPrice()) / LTC.getPrice() * 100)*100)/100);
+                            String formattedNumber = decimalFormat.format(Math.ceil(( (LTCpr-LTC.getPrice()) / LTC.getPrice() * 100)*100)/100);
+                            double result = Double.parseDouble(formattedNumber);
+                            LTC.setPriceChange1m(result);
                             LTC.setPrice(LTCpr);
                         }
                         if (BTC == null) {
@@ -237,7 +225,9 @@ public class Dashboard implements Initializable {
                             BTC = new Currency("BTC",BTCpr,imageView);
                             currencyTable.getItems().add(BTC) ;
                         }else {
-                            BTC.setPriceChange1m(( (BTCpr-BTC.getPrice()) / BTC.getPrice() * 100));
+                            String formattedNumber = decimalFormat.format(( (BTCpr-BTC.getPrice()) / BTC.getPrice() * 100));
+                            double result = Double.parseDouble(formattedNumber);
+                            BTC.setPriceChange1m(result);
                             BTC.setPrice(BTCpr);
                         }
                         if (ETH == null) {
@@ -246,7 +236,9 @@ public class Dashboard implements Initializable {
                             ETH = new Currency("ETH",ETHpr,imageView);
                             currencyTable.getItems().add(ETH) ;
                         }else {
-                            ETH.setPriceChange1m(( (ETHpr-ETH.getPrice()) / ETH.getPrice() * 100));
+                            String formattedNumber = decimalFormat.format(( (ETHpr-ETH.getPrice()) / ETH.getPrice() * 100));
+                            double result = Double.parseDouble(formattedNumber);
+                            ETH.setPriceChange1m(result);
                             ETH.setPrice(ETHpr);
                         }
                         if (AVAX == null) {
@@ -255,7 +247,9 @@ public class Dashboard implements Initializable {
                             AVAX = new Currency("AVAX",AVAXpr,imageView);
                             currencyTable.getItems().add(AVAX) ;
                         }else {
-                            AVAX.setPriceChange1m(( (AVAXpr -AVAX.getPrice()) / AVAX.getPrice() * 100));
+                            String formattedNumber = decimalFormat.format(( (AVAXpr -AVAX.getPrice()) / AVAX.getPrice() * 100));
+                            double result = Double.parseDouble(formattedNumber);
+                            AVAX.setPriceChange1m(result);
                             AVAX.setPrice(AVAXpr);
                         }
                     }
@@ -414,7 +408,6 @@ public class Dashboard implements Initializable {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Select Image File");
 
-        // Set file filter to only allow image files
         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Image Files", "*.jpg", "*.png", "*.jpeg");
         fileChooser.getExtensionFilters().add(extFilter);
 

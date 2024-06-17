@@ -3,13 +3,38 @@
     -fx-background-color:  #291e56;
 }
 
+.table-view .column-header-background{
+    -fx-background-color:   #1d124c;
+}
+
+.table-column .label {
+    -fx-text-fill: #ffffff;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-border-color: transparent;
+}
+
+.table-view .table-cell {
+    -fx-border-color: transparent;
+}
+
+.table-view .table-row-cell {
+    -fx-pref-height: 70px;
+}
+
 .table-view {
-    -fx-background-color:  #291e56;
+    -fx-background-color:  #1d124c;
     -fx-background-radius: 5;
 }
 
 .table-row-cell {
-    -fx-background-color: rgba(101, 70, 126, 0.5);
+    -fx-background-color: #1d124c;
     -fx-font-weight: bold;
 }
 
@@ -17,5 +42,5 @@
     -fx-text-fill: rgb(89, 204, 197);
     -fx-alignment: "center";
     -fx-font-size: 14;
-    -fx-background-color: rgba(31, 24, 72, 0.6);
+    -fx-background-color: #1d124c;
 }
