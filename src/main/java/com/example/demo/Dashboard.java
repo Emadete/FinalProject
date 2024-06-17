@@ -1,28 +1,62 @@
 package com.example.demo;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
-import javafx.scene.control.MenuButton;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.image.PixelReader;
+import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
+import javax.swing.*;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.*;
+import java.text.DateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 
 public class Dashboard implements Initializable {
+
+    private static Currency USDT ;
+    private static Currency LTC ;
+    private static Currency BTC ;
+    private static Currency ETH ;
+    private static Currency AVAX ;
+
+    @FXML
+    private TableView<Currency> currencyTable;
+
+    @FXML
+    private TableColumn<Currency, ImageView> photoColumn ;
+    @FXML
+    private TableColumn<Currency, String> marketColumn;
+    @FXML
+    private TableColumn<Currency, Double> priceColumn;
+    @FXML
+    private TableColumn<Currency, Double> changesColumn;
+    @FXML
+    private TableColumn<Currency, Double> minColumn;
+    @FXML
+    private TableColumn<Currency, Double> maxColumn;
 
     @FXML
     private Button fullName;
@@ -108,10 +142,15 @@ public class Dashboard implements Initializable {
     @FXML
     private Text Cardholder;
 
+    @FXML
+    private Label dateTimeLabel;
+
     private int selected = 1 ;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        makeCurrencyTable();
+
         fullName.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname()) ;
         usernametext.setText(Loginpage.user.getUserName());
         firstnametext.setText(Loginpage.user.getFirstname());
@@ -121,8 +160,118 @@ public class Dashboard implements Initializable {
         emailtext.setText(Loginpage.user.getEmail());
         Cardholder.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname());
         idcard.setText("5892 1015 0405 8690");
+        updateDateTime();
+        startDateTimeUpdate();
 
     }
+
+//    public Image resizeImage(Image originalImage, int targetWidth, int targetHeight) {
+//        ImageView imageView = new ImageView(originalImage);
+//        imageView.setFitWidth(targetWidth);
+//        imageView.setFitHeight(targetHeight);
+//        imageView.setPreserveRatio(true);
+//
+//        WritableImage resizedImage = new WritableImage(targetWidth, targetHeight);
+//        PixelReader pixelReader = imageView.snapshot(null, null).getPixelReader();
+//
+//        for (int y = 0; y < targetHeight; y++) {
+//            for (int x = 0; x < targetWidth; x++) {
+//                resizedImage.getPixelWriter().setArgb(x, y, pixelReader.getArgb((int) (x), (int) (y)));
+//            }
+//        }
+//
+//        return resizedImage;
+//    }
+
+    public void makeCurrencyTable (){
+        photoColumn.setCellValueFactory( new PropertyValueFactory<>("photo"));
+        marketColumn.setCellValueFactory( new PropertyValueFactory<>("name"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        changesColumn.setCellValueFactory( new PropertyValueFactory<>("priceChange1m"));
+        minColumn.setCellValueFactory( new PropertyValueFactory<>("minPrice24h"));
+        maxColumn.setCellValueFactory( new PropertyValueFactory<>("maxPrice24h"));
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String Username = "root";
+        String Password = "123456";
+
+        Timer timer = new Timer(60*1000, new ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                try (Connection conn = DriverManager.getConnection(url, Username, Password)){
+                    Time currentTime = new Time(new java.util.Date().getTime());
+                    String query = "SELECT * FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 60 * 1000)+"' AND '"+currentTime+"'";
+                    PreparedStatement preparedStatement = conn.prepareStatement(query);
+                    ResultSet resultSet = preparedStatement.executeQuery();
+                    while (resultSet.next()) {
+                        Date date = resultSet.getDate(1);
+                        Time time = resultSet.getTime(2);
+                        double USDTpr = resultSet.getDouble(3);
+                        double LTCpr = resultSet.getDouble(4);
+                        double BTCpr = resultSet.getDouble(5);
+                        double ETHpr = resultSet.getDouble(6);
+                        double AVAXpr = resultSet.getDouble(7);
+
+
+                        if (USDT == null) {
+                            Image image = new Image(Main.class.getResourceAsStream("/com/example/demo/images/tether1.png"));
+                            ImageView imageView = new ImageView(image);
+                            USDT = new Currency("USDT", USDTpr, imageView);
+                            currencyTable.getItems().add(USDT);
+                        }else {
+                            USDT.setPriceChange1m(Math.ceil(( (USDTpr-USDT.getPrice()) / USDT.getPrice() * 100)*100)/100);
+                            USDT.setPrice(USDTpr);
+                        }
+                        if (LTC == null) {
+                            Image image = new Image(Main.class.getResourceAsStream("/com/example/demo/images/lightcoin1.png"));
+                            ImageView imageView = new ImageView(image);
+                            LTC = new Currency("LTC",LTCpr,imageView);
+                            currencyTable.getItems().add(LTC) ;
+                        }else {
+                            LTC.setPriceChange1m(Math.ceil(( (LTCpr-LTC.getPrice()) / LTC.getPrice() * 100)*100)/100);
+                            LTC.setPrice(LTCpr);
+                        }
+                        if (BTC == null) {
+                            Image image = new Image(Main.class.getResourceAsStream("/com/example/demo/images/Bitcoin1.png"));
+                            ImageView imageView = new ImageView(image);
+                            BTC = new Currency("BTC",BTCpr,imageView);
+                            currencyTable.getItems().add(BTC) ;
+                        }else {
+                            BTC.setPriceChange1m(( (BTCpr-BTC.getPrice()) / BTC.getPrice() * 100));
+                            BTC.setPrice(BTCpr);
+                        }
+                        if (ETH == null) {
+                            Image image = new Image(Main.class.getResourceAsStream("/com/example/demo/images/Eterium1.png"));
+                            ImageView imageView = new ImageView(image);
+                            ETH = new Currency("ETH",ETHpr,imageView);
+                            currencyTable.getItems().add(ETH) ;
+                        }else {
+                            ETH.setPriceChange1m(( (ETHpr-ETH.getPrice()) / ETH.getPrice() * 100));
+                            ETH.setPrice(ETHpr);
+                        }
+                        if (AVAX == null) {
+                            Image image = new Image(Main.class.getResourceAsStream("/com/example/demo/images/Avalanch1.png"));
+                            ImageView imageView = new ImageView(image);
+                            AVAX = new Currency("AVAX",AVAXpr,imageView);
+                            currencyTable.getItems().add(AVAX) ;
+                        }else {
+                            AVAX.setPriceChange1m(( (AVAXpr -AVAX.getPrice()) / AVAX.getPrice() * 100));
+                            AVAX.setPrice(AVAXpr);
+                        }
+                    }
+                    currencyTable.refresh();
+                }catch (SQLException  ex) {
+                    System.err.println("Error: " + ex.getMessage());
+                }
+            }
+        });
+
+        timer.setRepeats(true);
+        timer.setCoalesce(true);
+        timer.setInitialDelay(0);
+        timer.start();
+    }
+
 
     private void closeMenu () {
         switch (selected) {
@@ -292,6 +441,19 @@ public class Dashboard implements Initializable {
             picture1.setImage(image);
             picture1.setImage(image);
         }
+    }
+
+    private void updateDateTime() {
+        LocalDateTime currentDateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDateTime = currentDateTime.format(formatter);
+        Platform.runLater(() -> dateTimeLabel.setText(formattedDateTime));
+    }
+
+    private void startDateTimeUpdate() {
+        Timeline timeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> updateDateTime()));
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
 }
