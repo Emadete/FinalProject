@@ -12,156 +12,156 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.ForgotPass">
    <children>
-      <AnchorPane fx:id="panel1" layoutX="1.0" prefHeight="584.0" prefWidth="876.0" style="-fx-background-color: rgba(41,30,86,0.6);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="panel1" layoutX="1.0" prefHeight="584.0" prefWidth="876.0" style="-fx-background-color: #291e56;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="348.0" layoutY="158.0" text="Forgot password?">
-               <font>
-                  <Font name="A Afsaneh" size="25.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="86.0" fitWidth="46.0" layoutX="415.0" layoutY="103.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/forgot.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="320.0" layoutY="196.0" text="No worries, we`ll send you reset instructions." textFill="#595353" />
             <Label layoutX="320.0" layoutY="239.0" text="Email" />
-            <TextField fx:id="EmailField" layoutX="320.0" layoutY="257.0" prefHeight="26.0" prefWidth="236.0" promptText="Enter your email" style="-fx-background-radius: 5;" />
-            <Button layoutX="320.0" layoutY="292.0" mnemonicParsing="false" onAction="#sentMailBtn" prefHeight="31.0" prefWidth="236.0" style="-fx-background-color: rgba(146, 60, 186,0.8);" text="send mail" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Hyperlink layoutX="398.0" layoutY="338.0" onAction="#backLoginAction" text="&lt;- Back to log in">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Hyperlink>
+            <AnchorPane layoutX="264.0" layoutY="113.0" prefHeight="358.0" prefWidth="354.0" style="-fx-background-color: #31297f; -fx-background-radius: 15;">
+               <children>
+                  <ImageView fitHeight="86.0" fitWidth="46.0" layoutX="148.0" layoutY="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/forgot.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="78.0" layoutY="75.0" text="Forgot password" textFill="#59ccc5">
+                     <font>
+                        <Font name="System Bold" size="25.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="59.0" layoutY="119.0" text="No worries, we`ll send you reset instructions." textFill="WHITE" />
+                  <TextField fx:id="EmailField" layoutX="58.0" layoutY="152.0" prefHeight="26.0" prefWidth="236.0" promptText="Enter your email" style="-fx-background-radius: 5;" />
+                  <Button layoutX="81.0" layoutY="196.0" mnemonicParsing="false" onAction="#sentMailBtn" prefHeight="31.0" prefWidth="190.0" style="-fx-background-color: rgba(146, 60, 186,0.8); -fx-background-radius: 10;" text="send mail" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Hyperlink layoutX="151.0" layoutY="258.0" onAction="#backLoginAction" text="Log in" underline="true" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="panel2" prefHeight="584.0" prefWidth="876.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="panel2" prefHeight="584.0" prefWidth="876.0" style="-fx-background-color: #291e56;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="46.0" fitWidth="65.0" layoutX="403.0" layoutY="139.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="403.0" AnchorPane.rightAnchor="426.8">
-               <image>
-                  <Image url="@images/email-icon.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="294.0" layoutY="185.0" text="Check your email">
-               <font>
-                  <Font name="Times New Roman Bold" size="35.0" />
-               </font>
-            </Label>
-            <Label layoutX="321.0" layoutY="230.0" text="We have sent the recovery code to :" />
-            <Label layoutX="349.0" layoutY="277.0" text="please enter it in the box below">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <Label layoutX="351.0" layoutY="248.0" text="email" />
-            <TextField fx:id="recoveryField" layoutX="320.0" layoutY="301.0" prefHeight="26.0" prefWidth="210.0" promptText="Recovery code" style="-fx-background-color: white; -fx-background-radius: 5;" />
-            <Label layoutX="319.0" layoutY="376.0" text="Didn`t receive the email?">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <Hyperlink layoutX="448.0" layoutY="374.0" onAction="#resentMassage" text="click to resent">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Hyperlink>
-            <Label layoutX="319.0" layoutY="394.0" text="Did you enter the wrong email?">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <Hyperlink layoutX="480.0" layoutY="392.0" onAction="#changeEmail" text="click to change email">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Hyperlink>
-            <Hyperlink layoutX="385.0" layoutY="427.0" onAction="#backLoginAction" text="&lt;- back to log in">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Hyperlink>
-            <Button layoutX="321.0" layoutY="335.0" mnemonicParsing="false" onAction="#cheakCode" prefHeight="31.0" prefWidth="210.0" style="-fx-background-color: rgba(146, 60, 186,0.8); -fx-background-radius: 5;" text="check code" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
+            <AnchorPane layoutX="277.0" layoutY="101.0" prefHeight="415.0" prefWidth="377.0" style="-fx-background-color: #31297f; -fx-background-radius: 15;">
+               <children>
+                  <Label layoutX="56.0" layoutY="89.0" text="Check your email" textFill="#59ccc5">
+                     <font>
+                        <Font name="Times New Roman Bold" size="35.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="recoveryField" layoutX="82.0" layoutY="208.0" prefHeight="26.0" prefWidth="210.0" promptText="Recovery code" style="-fx-background-color: white; -fx-background-radius: 5;" />
+                  <Button layoutX="105.0" layoutY="246.0" mnemonicParsing="false" onAction="#cheakCode" prefHeight="31.0" prefWidth="162.0" style="-fx-background-color: rgba(146, 60, 186,0.8); -fx-background-radius: 10;" text="check code" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="91.0" layoutY="291.0" text="Didn`t receive the email?" textFill="WHITE">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="70.0" layoutY="320.0" text="Did you enter the wrong email?" textFill="WHITE">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Hyperlink layoutX="225.0" layoutY="289.0" onAction="#resentMassage" text="click to resent">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Hyperlink>
+                  <Hyperlink layoutX="224.0" layoutY="318.0" onAction="#changeEmail" text="click to change email">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Hyperlink>
+                  <Hyperlink layoutX="168.0" layoutY="352.0" onAction="#backLoginAction" text="Login" underline="true" />
+                  <Label layoutX="110.0" layoutY="183.0" text="please enter it in the box below" textFill="WHITE">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="110.0" layoutY="157.0" text="email" textFill="WHITE" />
+                  <Label layoutX="93.0" layoutY="139.0" text="We have sent the recovery code to :" textFill="WHITE" />
+                  <ImageView fitHeight="46.0" fitWidth="88.0" layoutX="153.0" layoutY="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/email-icon.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="panel3" prefHeight="584.0" prefWidth="877.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="panel3" prefHeight="584.0" prefWidth="877.0" style="-fx-background-color: #291e56;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <ImageView fitHeight="46.0" fitWidth="65.0" layoutX="417.0" layoutY="62.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/forgot.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="316.0" layoutY="128.0" text="set new password">
-               <font>
-                  <Font name="Times New Roman" size="35.0" />
-               </font>
-            </Label>
-            <Label layoutX="319.0" layoutY="185.0" text="Your new password must be defferent to" />
-            <Label layoutX="359.0" layoutY="203.0" text="previously used passwords" />
-            <Label layoutX="319.0" layoutY="244.0" text="password">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <Label layoutX="315.0" layoutY="319.0" text="Confirm password">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <Label layoutX="315.0" layoutY="291.0" text="Must be at least 8 characters">
-               <font>
-                  <Font size="9.0" />
-               </font>
-            </Label>
-            <Button layoutX="316.0" layoutY="377.0" mnemonicParsing="false" onAction="#resPassBtn" prefHeight="31.0" prefWidth="247.0" style="-fx-background-color: rgba(146, 60, 186,0.8); -fx-background-radius: 5;" text="Reset password" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="13.0" />
-               </font>
-            </Button>
-            <Hyperlink layoutX="398.0" layoutY="425.0" onAction="#backLoginAction" text="&lt;- back to log in">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Hyperlink>
-            <PasswordField fx:id="passFlied" layoutX="314.0" layoutY="260.0" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: white; -fx-background-radius: 5;" />
-            <PasswordField fx:id="conPassFlied" layoutX="314.0" layoutY="335.0" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: white; -fx-background-radius: 5;" />
+            <AnchorPane layoutX="254.0" layoutY="67.0" prefHeight="442.0" prefWidth="388.0" style="-fx-background-color: #31297f; -fx-background-radius: 15;">
+               <children>
+                  <ImageView fitHeight="46.0" fitWidth="65.0" layoutX="171.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/forgot.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="70.0" layoutY="91.0" text="set new password" textFill="#59ccc5">
+                     <font>
+                        <Font name="Times New Roman" size="35.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="83.0" layoutY="141.0" text="Your new password must be defferent to" textFill="WHITE" />
+                  <Label layoutX="113.0" layoutY="165.0" text="previously used passwords" textFill="WHITE" />
+                  <PasswordField fx:id="passFlied" layoutX="70.0" layoutY="223.0" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: white; -fx-background-radius: 5;" />
+                  <Label layoutX="70.0" layoutY="205.0" text="password" textFill="WHITE">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="70.0" layoutY="249.0" text="Must be at least 8 characters" textFill="WHITE">
+                     <font>
+                        <Font size="9.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="72.0" layoutY="279.0" text="Confirm password" textFill="WHITE">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="conPassFlied" layoutX="70.0" layoutY="295.0" prefHeight="26.0" prefWidth="247.0" style="-fx-background-color: white; -fx-background-radius: 5;" />
+                  <Button layoutX="104.0" layoutY="340.0" mnemonicParsing="false" onAction="#resPassBtn" prefHeight="31.0" prefWidth="178.0" style="-fx-background-color: rgba(146, 60, 186,0.8); -fx-background-radius: 10;" text="Reset password" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Hyperlink layoutX="175.0" layoutY="384.0" onAction="#backLoginAction" text="Login" underline="true" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="panel4" prefHeight="584.0" prefWidth="878.0" style="-fx-background-color: rgba(41,30,86,0.6);" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="panel4" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #291e56;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label layoutX="334.0" layoutY="161.0" text="Password reset">
-               <font>
-                  <Font name="Times New Roman" size="35.0" />
-               </font>
-            </Label>
-            <ImageView fitHeight="46.0" fitWidth="46.0" layoutX="416.0" layoutY="109.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@images/green-tick.png" />
-               </image>
-            </ImageView>
-            <Label layoutX="335.0" layoutY="208.0" text="Your password has been successfully reset.">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <Label layoutX="367.0" layoutY="232.0" text="Click below to login magically">
-               <font>
-                  <Font size="11.0" />
-               </font>
-            </Label>
-            <Button layoutX="335.0" layoutY="277.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="207.0" style="-fx-background-radius: 5; -fx-background-color: rgb(67, 170, 196);" text="Continue" />
-            <Hyperlink layoutX="398.0" layoutY="332.0" onAction="#backLoginAction" text="&lt;- back to log in">
-               <font>
-                  <Font size="10.0" />
-               </font>
-            </Hyperlink>
+            <AnchorPane layoutX="306.0" layoutY="113.0" prefHeight="326.0" prefWidth="300.0" style="-fx-background-color: #31297f; -fx-background-radius: 15;">
+               <children>
+                  <Label layoutX="49.0" layoutY="72.0" text="Password reset" textFill="#59ccc5">
+                     <font>
+                        <Font name="Times New Roman" size="35.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="46.0" fitWidth="46.0" layoutX="121.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/green-tick.png" />
+                     </image>
+                  </ImageView>
+                  <Label layoutX="44.0" layoutY="134.0" text="Your password has been successfully reset." textFill="WHITE">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="72.0" layoutY="150.0" text="Click below to login magically" textFill="WHITE">
+                     <font>
+                        <Font size="11.0" />
+                     </font>
+                  </Label>
+                  <Button layoutX="44.0" layoutY="192.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="207.0" style="-fx-background-radius: 5; -fx-background-color: rgb(67, 170, 196);" text="Continue" />
+                  <Hyperlink layoutX="125.0" layoutY="246.0" onAction="#backLoginAction" text="Login" underline="true" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>
