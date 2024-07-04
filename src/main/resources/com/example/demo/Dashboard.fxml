@@ -2,6 +2,7 @@
 
 <?import java.lang.String?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -13,7 +14,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane prefHeight="594.0" prefWidth="872.0" style="-fx-background-color: #291e56; -fx-border-color: #362782; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Dashboard">
+<AnchorPane prefHeight="594.0" prefWidth="872.0" style="-fx-background-color: #291e56;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Dashboard">
    <children>
       <AnchorPane fx:id="menuPnl" layoutX="27.0" layoutY="20.0" prefHeight="554.0" prefWidth="146.0" style="-fx-background-color: #31297f; -fx-background-radius: 10;">
          <children>
@@ -126,7 +127,179 @@
       </AnchorPane>
       <AnchorPane fx:id="walletPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
          <children>
-            <Label layoutX="300.0" layoutY="250.0" text="Wallet Pane" />
+            <AnchorPane layoutX="26.0" layoutY="15.0" prefHeight="235.0" prefWidth="470.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;">
+               <children>
+                  <Text fill="WHITE" layoutX="31.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Main Balance">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="31.0" layoutY="64.0" strokeType="OUTSIDE" strokeWidth="0.0" text="\$">
+                     <font>
+                        <Font name="System Bold" size="16.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="walletbalance" fill="WHITE" layoutX="53.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="186.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Card Holder">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="walletcard" fill="WHITE" layoutX="186.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="walletid" fill="WHITE" layoutX="307.0" layoutY="62.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="514.0" layoutY="15.0" prefHeight="235.0" prefWidth="158.0" style="-fx-background-color: #31297f; -fx-background-radius: 15;">
+               <children>
+                  <Circle fill="#8680ac" layoutX="37.0" layoutY="26.0" radius="13.0" stroke="#8680ac" strokeType="INSIDE" style="-fx-opacity: 0.5;" />
+                  <Circle fill="#8680ac" layoutX="50.0" layoutY="26.0" radius="13.0" stroke="#8680ac" strokeType="INSIDE" style="-fx-opacity: 0.5;" />
+                  <Circle fill="#31297f" layoutX="79.0" layoutY="144.0" radius="61.0" stroke="#fcf9f9" strokeType="INSIDE" style="-fx-opacity: 0.2;" />
+                  <Circle fill="#31297f" layoutX="79.0" layoutY="144.0" radius="45.0" stroke="#fcf9f9" strokeType="INSIDE" style="-fx-opacity: 0.2;" />
+                  <Circle fill="#31297f" layoutX="79.0" layoutY="144.0" radius="28.0" stroke="#faf9f9" strokeType="INSIDE" style="-fx-opacity: 0.2;" />
+                  <AnchorPane layoutX="13.0" layoutY="132.0" prefHeight="80.0" prefWidth="132.0" style="-fx-background-radius: 15; -fx-background-color: #1d124c;" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="25.0" layoutY="266.0" prefHeight="248.0" prefWidth="645.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;">
+               <children>
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="37.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Bitcoin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="50.0" fitWidth="34.0" layoutX="37.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Eterium.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="37.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/tether.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="35.0" fitWidth="34.0" layoutX="37.0" layoutY="146.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/lightcoin.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fitHeight="42.0" fitWidth="34.0" layoutX="37.0" layoutY="190.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@images/Avalanch.png" />
+                     </image>
+                  </ImageView>
+                  <Button layoutX="101.0" layoutY="18.0" mnemonicParsing="false" style="-fx-background-color: #1d124c;" text="BTC" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="101.0" layoutY="62.0" mnemonicParsing="false" style="-fx-background-color: #1d124c;" text="ETH" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="101.0" layoutY="105.0" mnemonicParsing="false" style="-fx-background-color: #1d124c;" text="USDT" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="101.0" layoutY="151.0" mnemonicParsing="false" style="-fx-background-color: #1d124c;" text="LTC" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="101.0" layoutY="195.0" mnemonicParsing="false" style="-fx-background-color: #1d124c;" text="AVAX" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Text fx:id="currentbtc" fill="WHITE" layoutX="205.0" layoutY="36.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="currenteth" fill="WHITE" layoutX="205.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="currentusdt" fill="WHITE" layoutX="205.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="currentltc" fill="WHITE" layoutX="205.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="currentavax" fill="WHITE" layoutX="205.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="pricebtc" fill="WHITE" layoutX="315.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="priceeth" fill="WHITE" layoutX="315.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="priceusdt" fill="WHITE" layoutX="315.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="priceltc" fill="WHITE" layoutX="315.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="priceavax" fill="WHITE" layoutX="315.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="balancebtc" fill="WHITE" layoutX="434.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="balanceeth" fill="WHITE" layoutX="434.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="balanceusdt" fill="WHITE" layoutX="434.0" layoutY="124.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="balanceltc" fill="WHITE" layoutX="434.0" layoutY="170.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fx:id="balanceavax" fill="WHITE" layoutX="434.0" layoutY="214.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Text>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="exchangePane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
@@ -153,11 +326,19 @@
             </Text>
             <AnchorPane layoutX="29.0" layoutY="34.0" prefHeight="476.0" prefWidth="339.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;">
                <children>
-                  <ImageView fitHeight="35.0" fitWidth="167.0" layoutX="29.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="35.0" fitWidth="167.0" layoutX="97.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@images/paypal.png" />
                      </image>
                   </ImageView>
+                  <AnchorPane layoutX="36.0" layoutY="78.0" prefHeight="365.0" prefWidth="270.0" style="-fx-background-color: #31297f; -fx-background-radius: 15;">
+                     <children>
+                        <TextField fx:id="wallet_id" alignment="CENTER" layoutX="20.0" layoutY="54.0" prefHeight="26.0" prefWidth="230.0" promptText="Wallet_Id" style="-fx-background-radius: 5;" />
+                        <ChoiceBox fx:id="Coin" layoutX="20.0" layoutY="93.0" prefHeight="26.0" prefWidth="63.0" style="-fx-background-radius: 5;" />
+                        <TextField fx:id="amount" alignment="CENTER" layoutX="91.0" layoutY="93.0" prefHeight="26.0" prefWidth="158.0" promptText="amount" style="-fx-background-radius: 5;" />
+                        <Button fx:id="doneBtn" layoutX="20.0" layoutY="136.0" mnemonicParsing="false" onAction="#doneBtn" prefHeight="26.0" prefWidth="230.0" style="-fx-background-radius: 5;" text="Done" />
+                     </children>
+                  </AnchorPane>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="391.0" layoutY="220.0" prefHeight="290.0" prefWidth="254.0" style="-fx-background-color: #31297f; -fx-background-radius: 15;">
@@ -252,6 +433,13 @@
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Text>
+                  <Button fx:id="editBtn" layoutX="250.0" layoutY="320.0" mnemonicParsing="false" onAction="#editBtn" prefHeight="27.0" prefWidth="99.0" style="-fx-background-color: #ff964a; -fx-background-radius: 10;" text="Edit" />
+                  <TextField fx:id="firstnamefild" layoutX="338.0" layoutY="83.0" promptText="Firstname" style="-fx-background-radius: 5;" visible="false" />
+                  <TextField fx:id="lastnamefild" layoutX="338.0" layoutY="123.0" promptText="Lastname" style="-fx-background-radius: 5;" visible="false" />
+                  <TextField fx:id="passwordfild" layoutX="338.0" layoutY="163.0" promptText="Password" style="-fx-background-radius: 5;" visible="false" />
+                  <TextField fx:id="phonenumberfild" layoutX="338.0" layoutY="208.0" promptText="Phonenumber" style="-fx-background-radius: 5;" visible="false" />
+                  <TextField fx:id="emailfild" layoutX="338.0" layoutY="258.0" promptText="Email" style="-fx-background-radius: 5;" visible="false" />
+                  <Button fx:id="submitBtn" layoutX="250.0" layoutY="320.0" mnemonicParsing="false" onAction="#submitBtn" prefHeight="27.0" prefWidth="99.0" style="-fx-background-color: #ff964a; -fx-background-radius: 10;" text="Submit" visible="false" />
                </children>
             </AnchorPane>
          </children>

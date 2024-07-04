@@ -4,6 +4,8 @@ import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,6 +44,8 @@ public class Dashboard implements Initializable {
     private static Currency BTC ;
     private static Currency ETH ;
     private static Currency AVAX ;
+
+    ObservableList<String> coinlist = FXCollections.observableArrayList("USDT","LTC","BTC","ETH","AVAX");
 
     @FXML
     private TableView<Currency> currencyTable;
@@ -146,11 +150,99 @@ public class Dashboard implements Initializable {
     @FXML
     private Label dateTimeLabel;
 
+    @FXML
+    private TextField emailfild;
+
+    @FXML
+    private TextField firstnamefild;
+
+    @FXML
+    private TextField lastnamefild;
+
+    @FXML
+    private TextField passwordfild;
+
+    @FXML
+    private TextField phonenumberfild;
+
+    @FXML
+    private Button editBtn;
+
+    @FXML
+    private Button submitBtn;
+
+    @FXML
+    private ChoiceBox Coin;
+
+    @FXML
+    private TextField amount;
+
+    @FXML
+    private Button doneBtn;
+
+    @FXML
+    private TextField wallet_id;
+
+    @FXML
+    private Text balanceavax;
+
+    @FXML
+    private Text balancebtc;
+
+    @FXML
+    private Text balanceeth;
+
+    @FXML
+    private Text balanceltc;
+
+    @FXML
+    private Text balanceusdt;
+
+    @FXML
+    private Text currentavax;
+
+    @FXML
+    private Text currentbtc;
+
+    @FXML
+    private Text currenteth;
+
+    @FXML
+    private Text currentltc;
+
+    @FXML
+    private Text currentusdt;
+
+    @FXML
+    private Text priceavax;
+
+    @FXML
+    private Text pricebtc;
+
+    @FXML
+    private Text priceeth;
+
+    @FXML
+    private Text priceltc;
+
+    @FXML
+    private Text priceusdt;
+
+    @FXML
+    private Text walletbalance;
+
+    @FXML
+    private Text walletcard;
+
+    @FXML
+    private Text walletid;
+
     private int selected = 1 ;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         makeCurrencyTable();
+        makewallet();
 
         fullName.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname()) ;
         usernametext.setText(Loginpage.user.getUserName());
@@ -161,6 +253,8 @@ public class Dashboard implements Initializable {
         emailtext.setText(Loginpage.user.getEmail());
         Cardholder.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname());
         idcard.setText("5892 1015 0405 8690");
+        Coin.setItems(coinlist);
+        Coin.setValue("USDT");
         updateDateTime();
         startDateTimeUpdate();
 
@@ -296,6 +390,154 @@ public class Dashboard implements Initializable {
         }
     }
 
+
+    public void doneBtn(ActionEvent event){
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+
+            String sql = "UPDATE wallet SET " + Coin.getValue() + " = " + Coin.getValue() + " + ? WHERE id = '" + wallet_id.getText() + "'";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setFloat(1, Float.parseFloat(amount.getText()));
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void makewallet(){
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            String query = "SELECT * FROM wallet WHERE username = '" + Loginpage.user.getUserName() + "'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+
+                String wid = resultSet.getString("id");
+                walletid.setText(wid);
+                float wbtc = resultSet.getFloat("BTC");
+                pricebtc.setText(Float.toString(wbtc));
+                float weth = resultSet.getFloat("ETH");
+                priceeth.setText(Float.toString(weth));
+                float wusdt = resultSet.getFloat("USDT");
+                priceusdt.setText(Float.toString(wusdt));
+                float wltc = resultSet.getFloat("LTC");
+                priceltc.setText(Float.toString(wltc));
+                float wavax = resultSet.getFloat("AVAX");
+                priceavax.setText(Float.toString(wavax));
+
+            }
+
+            walletcard.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname());
+
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void editBtn(ActionEvent event){
+        firstnametext.setVisible(false);
+        lastnametext.setVisible(false);
+        passwordtext.setVisible(false);
+        phonenumbertext.setVisible(false);
+        emailtext.setVisible(false);
+        editBtn.setVisible(false);
+        firstnamefild.setVisible(true);
+        lastnamefild.setVisible(true);
+        passwordfild.setVisible(true);
+        phonenumberfild.setVisible(true);
+        emailfild.setVisible(true);
+        submitBtn.setVisible(true);
+    }
+
+    private boolean isNotEmpty(String text) {
+        return text != null && !text.trim().isEmpty();
+    }
+
+    public void submitBtn(ActionEvent event){
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+
+            if (isNotEmpty(firstnamefild.getText())){
+                String sql = "UPDATE user SET firstname = ? WHERE username = '" + Loginpage.user.getUserName() + "'";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, firstnamefild.getText());
+                Loginpage.user.setFirstname(firstnamefild.getText());
+                firstnametext.setText(Loginpage.user.getFirstname());
+                pstmt.executeUpdate();
+            }
+
+            if (isNotEmpty(lastnamefild.getText())){
+                String sql = "UPDATE user SET lastname = ? WHERE username = '" + Loginpage.user.getUserName() + "'";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, lastnamefild.getText());
+                Loginpage.user.setLastname(lastnamefild.getText());
+                lastnametext.setText(Loginpage.user.getLastname());
+                pstmt.executeUpdate();
+            }
+
+            if (isNotEmpty(emailfild.getText())){
+                String sql = "UPDATE user SET email = ? WHERE username = '" + Loginpage.user.getUserName() + "'";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, emailfild.getText());
+                Loginpage.user.setEmail(emailfild.getText());
+                emailtext.setText(Loginpage.user.getEmail());
+                pstmt.executeUpdate();
+            }
+
+            if (isNotEmpty(phonenumberfild.getText())){
+                String sql = "UPDATE user SET phonenumber = ? WHERE username = ?";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, phonenumberfild.getText());
+                pstmt.setString(2, Loginpage.user.getUserName());
+                Loginpage.user.setPhoneNumber(phonenumberfild.getText());
+                phonenumbertext.setText(Loginpage.user.getPhoneNumber());
+                pstmt.executeUpdate();
+            }
+
+            if (isNotEmpty(passwordfild.getText())){
+                String sql = "UPDATE user SET password = ? WHERE username = '" + Loginpage.user.getUserName() + "'";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, passwordfild.getText());
+                Loginpage.user.setPassword(passwordfild.getText());
+                passwordtext.setText(Loginpage.user.getPassword());
+                pstmt.executeUpdate();
+            }
+
+            firstnametext.setVisible(true);
+            lastnametext.setVisible(true);
+            passwordtext.setVisible(true);
+            phonenumbertext.setVisible(true);
+            emailtext.setVisible(true);
+            editBtn.setVisible(true);
+            firstnamefild.setVisible(false);
+            lastnamefild.setVisible(false);
+            passwordfild.setVisible(false);
+            phonenumberfild.setVisible(false);
+            emailfild.setVisible(false);
+            submitBtn.setVisible(false);
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
 
     public void dashboardBtn(ActionEvent event) {
         Button b = (Button) event.getSource();
