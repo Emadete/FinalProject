@@ -406,21 +406,6 @@ public class Dashboard implements Initializable {
         swid.setVisible(true);
         subBtn.setVisible(true);
 
-        String url = "jdbc:mysql://localhost:3306/exchangedb";
-        String username = "root";
-        String password = "123456";
-
-        try (Connection conn = DriverManager.getConnection(url, username, password)){
-
-            String sql = "INSERT INTO wallet (id , username) VALUES (?, ?)";
-            PreparedStatement pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, swid.getText());
-            pstmt.setString(2, Loginpage.user.getUserName());
-
-        } catch (SQLException e) {
-            System.err.println("Error: " + e.getMessage());
-        }
-
     }
 
     public void subBtn(ActionEvent event){
@@ -428,6 +413,23 @@ public class Dashboard implements Initializable {
         setBtn.setVisible(true);
         swid.setVisible(false);
         subBtn.setVisible(false);
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            String sql = "INSERT INTO wallet (id , username , USDT , LTC , BTC , ETH , AVAX) VALUES (?, ?, 0, 0, 0, 0, 0)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, swid.getText());
+            pstmt.setString(2, Loginpage.user.getUserName());
+            pstmt.executeUpdate();
+            makewallet();
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
 
     }
 
@@ -465,6 +467,7 @@ public class Dashboard implements Initializable {
 
                 String wid = resultSet.getString("id");
                 walletid.setText(wid);
+                idcard.setText(wid);
                 float wbtc = resultSet.getFloat("BTC");
                 pricebtc.setText(Float.toString(wbtc));
                 float weth = resultSet.getFloat("ETH");
