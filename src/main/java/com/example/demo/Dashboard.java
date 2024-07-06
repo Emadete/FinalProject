@@ -237,6 +237,15 @@ public class Dashboard implements Initializable {
     @FXML
     private Text walletid;
 
+    @FXML
+    private Button setBtn;
+
+    @FXML
+    private TextField swid;
+
+    @FXML
+    private Button subBtn;
+
     private int selected = 1 ;
 
     @Override
@@ -390,6 +399,37 @@ public class Dashboard implements Initializable {
         }
     }
 
+
+    public void setBtn(ActionEvent event){
+
+        setBtn.setVisible(false);
+        swid.setVisible(true);
+        subBtn.setVisible(true);
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            String sql = "INSERT INTO wallet (id , username) VALUES (?, ?)";
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            pstmt.setString(1, swid.getText());
+            pstmt.setString(2, Loginpage.user.getUserName());
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void subBtn(ActionEvent event){
+
+        setBtn.setVisible(true);
+        swid.setVisible(false);
+        subBtn.setVisible(false);
+
+    }
 
     public void doneBtn(ActionEvent event){
 
