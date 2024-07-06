@@ -10,10 +10,12 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.Glow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -381,7 +383,90 @@
       </AnchorPane>
       <AnchorPane fx:id="swapPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
          <children>
-            <Label layoutX="300.0" layoutY="250.0" text="swap pane" />
+            <AnchorPane layoutX="166.0" layoutY="69.0" prefHeight="395.0" prefWidth="366.0" style="-fx-background-color: rgba(40,27,66,0.9); -fx-background-radius: 15; -fx-border-color: rgb(163, 147, 194); -fx-border-radius: 15;">
+               <children>
+                  <Text fill="WHITE" layoutX="14.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Swap">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Text>
+                  <Label layoutX="14.0" layoutY="42.0" text="Swap Any Assests Simply And Securty With" textFill="#ffffff99">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="57.0" text="Coin-Ex Self Developed Algorithm" textFill="#ffffff99">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Line endX="235.5999755859375" layoutX="115.0" layoutY="83.0" startX="-100.0" stroke="#a393c2" />
+                  <Line endX="235.5999755859375" layoutX="114.0" layoutY="260.0" startX="-100.0" stroke="#a393c2" />
+                  <AnchorPane layoutX="12.0" layoutY="100.0" prefHeight="60.0" prefWidth="338.0" style="-fx-background-color: rgba(166, 142, 222,0.9); -fx-background-radius: 10;">
+                     <children>
+                        <TextField layoutX="9.0" layoutY="27.0" prefHeight="27.0" prefWidth="122.0" promptText="currency amount" style="-fx-background-color: rgba(0,0,0,0); -fx-font: rba(10,0,50);">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="236.0" layoutY="5.0" prefHeight="18.0" prefWidth="96.0" text="Balance" />
+                        <Label layoutX="256.0" layoutY="27.0" prefHeight="27.0" prefWidth="66.0" text="Price" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <Label layoutX="14.0" layoutY="237.0" text="Conversion Rate" textFill="#ffffff99">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="258.0" layoutY="237.0" prefHeight="15.0" prefWidth="84.0" text="Value" textFill="#ffffff99">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="14.0" layoutY="269.0" text="Commission" textFill="#ffffff99">
+                     <font>
+                        <Font size="10.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="279.0" layoutY="268.0" prefHeight="18.0" prefWidth="70.0" text="Value" textFill="WHITE" />
+                  <AnchorPane layoutX="14.0" layoutY="168.0" prefHeight="60.0" prefWidth="338.0" style="-fx-background-color: rgba(166, 142, 222,0.9); -fx-background-radius: 10;">
+                     <children>
+                        <TextField layoutX="9.0" layoutY="27.0" prefHeight="27.0" prefWidth="122.0" promptText="currency amount" style="-fx-background-color: rgba(0,0,0,0); -fx-font: rba(10,0,50);">
+                           <font>
+                              <Font name="System Bold Italic" size="13.0" />
+                           </font>
+                        </TextField>
+                        <Label layoutX="236.0" layoutY="5.0" prefHeight="18.0" prefWidth="96.0" text="Balance" />
+                        <Label layoutX="256.0" layoutY="27.0" prefHeight="27.0" prefWidth="66.0" text="Price" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <Button layoutX="162.0" layoutY="147.5" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 17.5; -fx-background-color: rgb(126, 104, 163); -fx-border-color: rgb(164, 135, 212); -fx-border-radius: 17.5;" textFill="#c9a7a7">
+                     <graphic>
+                        <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@images/swapIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="15.0" layoutY="349.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="337.0" style="-fx-background-color: rgb(185, 27, 196); -fx-background-radius: 7;" text="Confirm" textAlignment="CENTER" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <effect>
+                        <Glow level="0.56" />
+                     </effect>
+                  </Button>
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="ProfilePane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
