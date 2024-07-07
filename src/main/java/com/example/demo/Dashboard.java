@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.LineChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -246,6 +247,10 @@ public class Dashboard implements Initializable {
     @FXML
     private Button subBtn;
 
+    @FXML
+    private LineChart<?, ?> chart;
+
+
     private int selected = 1 ;
 
     @Override
@@ -261,7 +266,6 @@ public class Dashboard implements Initializable {
         phonenumbertext.setText(Loginpage.user.getPhoneNumber());
         emailtext.setText(Loginpage.user.getEmail());
         Cardholder.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname());
-        idcard.setText("5892 1015 0405 8690");
         Coin.setItems(coinlist);
         Coin.setValue("USDT");
         updateDateTime();
@@ -400,6 +404,8 @@ public class Dashboard implements Initializable {
     }
 
 
+    public void makechart(){}
+
     public void setBtn(ActionEvent event){
 
         setBtn.setVisible(false);
@@ -454,6 +460,9 @@ public class Dashboard implements Initializable {
 
     public void makewallet(){
 
+        float wbtc = 0, weth = 0 , wusdt = 0 , wltc = 0 , wavax = 0;
+        double USDTpr = 0 , LTCpr = 0 , BTCpr = 0 , ETHpr = 0 , AVAXpr = 0;
+
         String url = "jdbc:mysql://localhost:3306/exchangedb";
         String username = "root";
         String password = "123456";
@@ -468,21 +477,48 @@ public class Dashboard implements Initializable {
                 String wid = resultSet.getString("id");
                 walletid.setText(wid);
                 idcard.setText(wid);
-                float wbtc = resultSet.getFloat("BTC");
+                wbtc = resultSet.getFloat("BTC");
                 pricebtc.setText(Float.toString(wbtc));
-                float weth = resultSet.getFloat("ETH");
+                weth = resultSet.getFloat("ETH");
                 priceeth.setText(Float.toString(weth));
-                float wusdt = resultSet.getFloat("USDT");
+                wusdt = resultSet.getFloat("USDT");
                 priceusdt.setText(Float.toString(wusdt));
-                float wltc = resultSet.getFloat("LTC");
+                wltc = resultSet.getFloat("LTC");
                 priceltc.setText(Float.toString(wltc));
-                float wavax = resultSet.getFloat("AVAX");
+                wavax = resultSet.getFloat("AVAX");
                 priceavax.setText(Float.toString(wavax));
 
             }
 
             walletcard.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname());
+            Time currentTime = new Time(new java.util.Date().getTime());
+            String sql = "SELECT * FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 60 * 1000)+"' AND '"+currentTime+"'";
+            PreparedStatement preparedStatement1 = conn.prepareStatement(sql);
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet1.next()){
 
+                Date date = resultSet1.getDate(1);
+                Time time = resultSet1.getTime(2);
+                USDTpr = resultSet1.getDouble(3);
+                currentusdt.setText(Double.toString(USDTpr));
+                LTCpr = resultSet1.getDouble(4);
+                currentltc.setText(Double.toString(LTCpr));
+                BTCpr = resultSet1.getDouble(5);
+                currentbtc.setText(Double.toString(BTCpr));
+                ETHpr = resultSet1.getDouble(6);
+                currenteth.setText(Double.toString(ETHpr));
+                AVAXpr = resultSet1.getDouble(7);
+                currentavax.setText(Double.toString(AVAXpr));
+
+            }
+
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            balancebtc.setText(decimalFormat.format(BTCpr * wbtc));
+            balanceusdt.setText(decimalFormat.format(USDTpr * wusdt));
+            balanceltc.setText(decimalFormat.format(LTCpr * wltc));
+            balanceeth.setText(decimalFormat.format(ETHpr * weth));
+            balanceavax.setText(decimalFormat.format(AVAXpr * wavax));
+            walletbalance.setText(decimalFormat.format((BTCpr * wbtc) + (USDTpr * wusdt) + (LTCpr * wltc) + (ETHpr * weth) + (AVAXpr * wavax)));
 
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
@@ -603,6 +639,7 @@ public class Dashboard implements Initializable {
         selected = 2 ;
 
         walletPane.setVisible(true);
+        makewallet();
     }
 
     @FXML

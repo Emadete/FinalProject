@@ -1,0 +1,18 @@
+.chart-plot-background{
+    -fx-background-color: #1d124c;
+}
+/* Customize gridlines */
+.chart-vertical-grid-lines {
+    -fx-stroke-width: 0.5; /* Set the width of vertical gridlines */
+    -fx-stroke: #DDDDDD; /* Set the color of vertical gridlines */
+}
+
+.chart-horizontal-grid-lines {
+    -fx-stroke-width: 0.5; /* Set the width of horizontal gridlines */
+    -fx-stroke: #DDDDDD; /* Set the color of horizontal gridlines */
+}
+
+/* Customize axis labels */
+.axis {
+    -fx-stroke: transparent; /* Make the axis lines transparent */
+}

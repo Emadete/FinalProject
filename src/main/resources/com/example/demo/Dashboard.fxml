@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
@@ -159,6 +162,14 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Text>
+                  <LineChart fx:id="chart" layoutX="8.0" layoutY="78.0" prefHeight="149.0" prefWidth="454.0" stylesheets="@chart.css">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
                </children>
             </AnchorPane>
             <AnchorPane layoutX="514.0" layoutY="15.0" prefHeight="235.0" prefWidth="158.0" style="-fx-background-color: #31297f; -fx-background-radius: 15;">
