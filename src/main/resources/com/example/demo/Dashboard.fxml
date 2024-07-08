@@ -19,6 +19,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.ProgressBar?>
 <AnchorPane prefHeight="594.0" prefWidth="872.0" style="-fx-background-color: #291e56;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Dashboard">
    <children>
       <AnchorPane fx:id="menuPnl" layoutX="27.0" layoutY="20.0" prefHeight="554.0" prefWidth="146.0" style="-fx-background-color: #31297f; -fx-background-radius: 10;">
@@ -64,7 +65,7 @@
                   <Image url="@images/swap.png" />
                </image>
             </ImageView>
-            <Label fx:id="dateTimeLabel" layoutX="17.0" layoutY="58.0" text="Label" textFill="WHITE">
+            <Label fx:id="dateTimeLabel" layoutX="17.0" layoutY="57.0" text="Date Time" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -325,7 +326,95 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="exchangePane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" />
+      <AnchorPane fx:id="exchangePane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0">
+         <children>
+            <Button layoutX="262.0" layoutY="-1.0" mnemonicParsing="false" style="-fx-background-color: tranparent;" text="Spot" textAlignment="CENTER" textFill="#00faff" underline="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Button layoutX="362.0" layoutY="-1.0" mnemonicParsing="false" style="-fx-background-color: tranparent;" text="Margin 5X" textFill="#00faff">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <AnchorPane layoutX="39.0" layoutY="100.0" prefHeight="334.0" prefWidth="270.0" style="-fx-background-color: rgb(79, 82, 105); -fx-background-radius: 10;">
+               <children>
+                  <Button layoutX="55.0" layoutY="45.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: rgb(148, 156, 146);" text="Buy" textFill="#534b4b">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <Button layoutX="135.0" layoutY="45.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="80.0" style="-fx-background-color: rgb(219, 18, 18);" text="Sell" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Button>
+                  <ChoiceBox layoutX="55.0" layoutY="90.0" prefHeight="26.0" prefWidth="160.0" />
+                  <TextField layoutX="55.0" layoutY="133.0" prefHeight="26.0" prefWidth="158.0" />
+                  <TextField layoutX="55.0" layoutY="173.0" prefHeight="26.0" prefWidth="158.0" />
+                  <Text fill="WHITE" layoutX="55.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Text fill="WHITE" layoutX="160.0" layoutY="232.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Currency">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Text>
+                  <Button layoutX="55.0" layoutY="262.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="158.0" style="-fx-background-color: rgb(45, 60, 168);" text="confirm" />
+               </children>
+            </AnchorPane>
+            <ProgressBar layoutX="429.0" layoutY="78.0" prefHeight="21.0" prefWidth="200.0" progress="0.32" style="-fx-blend-mode: red; -fx-background-color: green;" />
+            <Text fill="#d4c5c5" layoutX="429.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="price" />
+            <Text fill="#d4c5c5" layoutX="429.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(cur2.name)" />
+            <Text fill="#d4c5c5" layoutX="586.0" layoutY="113.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Amount" />
+            <Text fill="#d4c5c5" layoutX="566.0" layoutY="130.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(cur1.name)" />
+            <AnchorPane layoutX="429.0" layoutY="134.0" prefHeight="134.0" prefWidth="200.0">
+               <children>
+                  <ProgressBar layoutY="5.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.16" style="-fx-blend-mode: red;" />
+                  <ProgressBar layoutY="105.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.44" style="-fx-blend-mode: red;" />
+                  <ProgressBar layoutY="80.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.17" style="-fx-blend-mode: red;" />
+                  <ProgressBar layoutY="55.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.61" style="-fx-blend-mode: red;" />
+                  <ProgressBar layoutY="30.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.24" style="-fx-blend-mode: red;" />
+                  <Label layoutX="7.0" layoutY="55.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="7.0" layoutY="80.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="7.0" layoutY="105.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="7.0" layoutY="30.0" prefHeight="18.0" prefWidth="14.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="7.0" layoutY="5.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="5.0" text="amount" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="30.0" text="amount" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="55.0" text="amount" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="80.0" text="amount" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="105.0" text="amount" textFill="#fafafa" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="429.0" layoutY="299.0" prefHeight="134.0" prefWidth="200.0">
+               <children>
+                  <ProgressBar layoutY="5.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.16" style="-fx-blend-mode: green;" />
+                  <ProgressBar layoutY="105.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.44" style="-fx-blend-mode: green;" />
+                  <ProgressBar layoutY="80.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.17" style="-fx-blend-mode: green;" />
+                  <ProgressBar layoutY="55.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.61" style="-fx-blend-mode: green;" />
+                  <ProgressBar layoutY="30.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="18.0" prefWidth="200.0" progress="0.24" style="-fx-blend-mode: green;" />
+                  <Label layoutX="7.0" layoutY="55.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="7.0" layoutY="80.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="7.0" layoutY="105.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="7.0" layoutY="30.0" prefHeight="18.0" prefWidth="14.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="7.0" layoutY="5.0" text="p1" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="5.0" text="amount" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="30.0" text="amount" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="55.0" text="amount" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="80.0" text="amount" textFill="#fafafa" />
+                  <Label layoutX="158.0" layoutY="105.0" text="amount" textFill="#fafafa" />
+               </children>
+            </AnchorPane>
+            <Text fill="#26c714" layoutX="514.0" layoutY="284.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Price">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Text>
+         </children></AnchorPane>
       <AnchorPane fx:id="transferPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
          <children>
             <ImageView fitHeight="184.0" fitWidth="288.0" layoutX="390.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">

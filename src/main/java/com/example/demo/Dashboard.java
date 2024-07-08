@@ -609,6 +609,21 @@ public class Dashboard implements Initializable {
                             AVAX.setPrice(AVAXpr);
                         }
                     }
+                    String querynum = "SELECT ROW_NUMBER() OVER (ORDER BY Time) AS row_num FROM currency WHERE Time BETWEEN ? AND ?";
+                    PreparedStatement statement = conn.prepareStatement(querynum);
+                    statement.setTimestamp(1, new Timestamp(currentTime.getTime() - 60 * 1000));
+                    statement.setTimestamp(2, new Timestamp(currentTime.getTime()));
+                    ResultSet resultSet3 = statement.executeQuery();
+                    int offset = 0;
+                    while(resultSet3.next()) {
+                        int rowNumber = resultSet3.getInt("row_num");
+                        offset = rowNumber + 1 ;
+                    }
+                    fetchMinMaxPrices(conn,offset,USDT);
+                    fetchMinMaxPrices(conn,offset,BTC);
+                    fetchMinMaxPrices(conn,offset,LTC);
+                    fetchMinMaxPrices(conn,offset,ETH);
+                    fetchMinMaxPrices(conn,offset,AVAX);
                     currencyTable.refresh();
                 }catch (SQLException  ex) {
                     System.err.println("Error: " + ex.getMessage());
@@ -620,6 +635,30 @@ public class Dashboard implements Initializable {
         timer.setCoalesce(true);
         timer.setInitialDelay(0);
         timer.start();
+    }
+
+    public void fetchMinMaxPrices(Connection conn, int offset, Currency cur) throws SQLException {
+        String maxQuery = "SELECT MAX(" + cur.getName() + ") AS name FROM currency "
+                + "ORDER BY " + cur.getName() + " DESC "
+                + "LIMIT ? ";
+        PreparedStatement p = conn.prepareStatement(maxQuery);
+        p.setInt(1, offset);
+        ResultSet resultSet1 = p.executeQuery();
+        if (resultSet1.next()) {
+            String maxPriceResult = resultSet1.getString("name");
+            cur.setMaxPrice24h(Double.valueOf(maxPriceResult));
+        }
+
+        String minQuery = "SELECT MIN(" + cur.getName() + ") AS name FROM currency "
+                + "ORDER BY " + cur.getName() + " DESC "
+                + "LIMIT ? ";
+        PreparedStatement p1 = conn.prepareStatement(minQuery);
+        p1.setInt(1, offset);
+        ResultSet resultSet2 = p1.executeQuery();
+        if (resultSet2.next()) {
+            String minPriceResult = resultSet2.getString("name");
+            cur.setMinPrice24h(Double.valueOf(minPriceResult));
+        }
     }
 
 
