@@ -25,7 +25,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javax.swing.*;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -36,7 +37,10 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 public class Dashboard implements Initializable {
 
@@ -63,6 +67,13 @@ public class Dashboard implements Initializable {
     private TableColumn<Currency, Double> minColumn;
     @FXML
     private TableColumn<Currency, Double> maxColumn;
+
+    @FXML
+    private TableView<History> historyTableView ;
+    @FXML
+    private TableColumn<History , String> operationColumn ;
+    @FXML
+    private TableColumn<History , String> descriptionColumn ;
 
     @FXML
     private Button fullName;
@@ -150,7 +161,19 @@ public class Dashboard implements Initializable {
 
     @FXML
     private Label dateTimeLabel;
+    @FXML
+    private Label balance1;
+    @FXML
+    private Label balance2;
+    @FXML
+    private Label price1;
+    @FXML
+    private Label price2;
 
+    @FXML
+    private TextField curAmount1;
+    @FXML
+    private TextField curAmount2;
     @FXML
     private TextField emailfild;
 
@@ -180,6 +203,11 @@ public class Dashboard implements Initializable {
 
     @FXML
     private Button doneBtn;
+
+    @FXML
+    private ChoiceBox cur1Btn;
+    @FXML
+    private ChoiceBox cur2Btn;
 
     @FXML
     private TextField wallet_id;
@@ -256,7 +284,9 @@ public class Dashboard implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         makeCurrencyTable();
+        initHistoryTabelView();
         makewallet();
+        SwapPage swapPage = new SwapPage();
 
         fullName.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname()) ;
         usernametext.setText(Loginpage.user.getUserName());
@@ -268,10 +298,229 @@ public class Dashboard implements Initializable {
         Cardholder.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname());
         Coin.setItems(coinlist);
         Coin.setValue("USDT");
+        cur1Btn.setItems(coinlist);
+        cur2Btn.setItems(coinlist);
+        cur1Btn.setValue(coinlist.get(0));
+        cur2Btn.setValue(coinlist.get(1));
         updateDateTime();
         startDateTimeUpdate();
 
     }
+
+    public void initHistoryTabelView (){
+        operationColumn.setCellValueFactory( new PropertyValueFactory<>("operation"));
+        descriptionColumn.setCellValueFactory( new PropertyValueFactory<>("description"));
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String Username = "root";
+        String Password = "123456";
+        try (Connection conn = DriverManager.getConnection(url, Username, Password)){
+
+            String query = "SELECT * FROM history WHERE username = '"+Loginpage.user.getUserName()+"'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String operation = resultSet.getString(2);
+                String description = resultSet.getString(3);
+
+                History history = new History(operation,description) ;
+
+                historyTableView.getItems().add(history);
+            }
+            historyTableView.refresh();
+        }catch (SQLException  ex) {
+            System.err.println("Error: " + ex.getMessage());
+        }
+    }
+
+    public class SwapPage {
+        public SwapPage () {
+            setFormat();
+            initSwap() ;
+        }
+
+        private double maxValue ;
+
+        private void setFormat () {
+
+            UnaryOperator<Change> filter = change -> {
+                String text = change.getText();
+
+                // Check if the change will exceed the maximum value
+                if (text.matches("[0-9.]*")) {
+                    String newValue = change.getControlNewText();
+                    if (newValue.isEmpty()) {
+                        return change;
+                    }
+
+                    try {
+                        double newValueDouble = Double.parseDouble(newValue);
+                        if (newValueDouble > maxValue) {
+                            return null; // Prevent the change if it exceeds the maximum value
+                        }
+                    } catch (NumberFormatException e) {
+                        return null; // Prevent non-numeric input
+                    }
+                    return change;
+                }
+
+                return null;
+            };
+            curAmount1.setTextFormatter(new TextFormatter<>(filter));
+            curAmount2.setTextFormatter(new TextFormatter<>(filter));
+        }
+
+        public void initSwap() {
+            String url = "jdbc:mysql://localhost:3306/exchangedb";
+            String username = "root";
+            String password = "123456";
+
+            Timer timer = new Timer(1000, new ActionListener() {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    try (Connection conn = DriverManager.getConnection(url, username, password)) {
+                        fetchAndUpdateData(conn);
+                    } catch (SQLException ex) {
+                        System.err.println("Error: " + ex.getMessage());
+                    }
+                }
+            });
+            timer.setRepeats(true);
+            timer.setCoalesce(true);
+            timer.setInitialDelay(0);
+            timer.start();
+        }
+
+        private void fetchAndUpdateData(Connection conn) throws SQLException {
+            String query = "SELECT * FROM wallet WHERE username =?";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                preparedStatement.setString(1, Loginpage.user.getUserName());
+                try (ResultSet resultSet2 = preparedStatement.executeQuery()) {
+                    if (resultSet2.next()) {
+                        float USDTbal = resultSet2.getFloat("USDT");
+                        float LTCbal = resultSet2.getFloat("LTC");
+                        float BTCbal = resultSet2.getFloat("BTC");
+                        float ETHbal = resultSet2.getFloat("ETH");
+                        float AVAXbal = resultSet2.getFloat("AVAX");
+
+                        updateBalances(USDTbal, LTCbal, BTCbal, ETHbal, AVAXbal);
+                    }
+                }
+            }
+
+            query = "SELECT * FROM currency WHERE Time BETWEEN? AND?";
+            try (PreparedStatement preparedStatement = conn.prepareStatement(query)) {
+                Time currentTime = new Time(new java.util.Date().getTime());
+                preparedStatement.setTime(1, new Time(currentTime.getTime() - 60 * 1000));
+                preparedStatement.setTime(2, currentTime);
+
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    while (resultSet.next()) {
+                        double USDTpr = resultSet.getDouble(3);
+                        double LTCpr = resultSet.getDouble(4);
+                        double BTCpr = resultSet.getDouble(5);
+                        double ETHpr = resultSet.getDouble(6);
+                        double AVAXpr = resultSet.getDouble(7);
+
+                        updatePrices(BTCpr, USDTpr, ETHpr, AVAXpr, LTCpr);
+                    }
+                }
+            }
+        }
+
+        private void updateBalances(float USDTbal, float LTCbal, float BTCbal, float ETHbal, float AVAXbal) {
+            Map<String, Float> balances = new HashMap<>();
+            balances.put("BTC", BTCbal);
+            balances.put("USDT", USDTbal);
+            balances.put("ETH", ETHbal);
+            balances.put("AVAX", AVAXbal);
+            balances.put("LTC", LTCbal);
+
+            String cur1 = cur1Btn.getValue().toString();
+            String cur2 = cur2Btn.getValue().toString();
+
+
+            Platform.runLater(() -> {
+                maxValue = updateBalance(balance1, cur1, balances);
+                updateBalance(balance2, cur2, balances);
+            });
+        }
+
+        private Float updateBalance(Label label, String currency, Map<String, Float> balances) {
+            label.setText("bal. " + balances.getOrDefault(currency, 0f));
+            return balances.getOrDefault(currency, 0f) ;
+        }
+
+        private void updatePrices(double BTCpr, double USDTpr, double ETHpr, double AVAXpr, double LTCpr) {
+            Map<String, Double> prices = new HashMap<>();
+            prices.put("BTC", BTCpr);
+            prices.put("USDT", USDTpr);
+            prices.put("ETH", ETHpr);
+            prices.put("AVAX", AVAXpr);
+            prices.put("LTC", LTCpr);
+
+            double curPrice1 = prices.getOrDefault(cur1Btn.getValue(), 0d);
+            double curPrice2 = prices.getOrDefault(cur2Btn.getValue(), 0d);
+
+            if (!curAmount1.getText().isEmpty()) {
+                double curAmount1Value = Double.valueOf(curAmount1.getText());
+                double finalCurPrice = curAmount1Value * curPrice1;
+
+                Platform.runLater(() -> {
+                    price1.setText('$' + String.format("%.2f", finalCurPrice));
+                });
+
+                double curAmount2Value = finalCurPrice / curPrice2 ;
+                curAmount2.setText(Double.toString(curAmount2Value));
+            }
+
+            if (!curAmount2.getText().isEmpty()) {
+                double curAmount2Value = Double.valueOf(curAmount2.getText());
+                double finalCurPrice = curAmount2Value * curPrice2;
+
+                Platform.runLater(() -> {
+                    price2.setText('$' + String.format("%.2f", finalCurPrice));
+                });
+            }
+        }
+    }
+
+    @FXML
+    public void confirmBtn(ActionEvent event) {
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        if (!curAmount1.getText().isEmpty()) {
+            try (Connection conn = DriverManager.getConnection(url, username, password)){
+                String sql = "UPDATE wallet SET " + cur1Btn.getValue() + " = " + cur1Btn.getValue() + " - ? WHERE username = '" + Loginpage.user.getUserName() + "'";
+                PreparedStatement pstmt = conn.prepareStatement(sql);
+                pstmt.setFloat(1, Float.valueOf(curAmount1.getText()));
+                pstmt.executeUpdate();
+                String sql2 = "UPDATE wallet SET " + cur2Btn.getValue() + " = " + cur2Btn.getValue() + " + ? WHERE username = '" + Loginpage.user.getUserName() + "'";
+                PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+                pstmt2.setFloat(1, Float.valueOf(curAmount2.getText()));
+                pstmt2.executeUpdate();
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+
+            try (Connection connection = DriverManager.getConnection(url , username , password)){
+                String sql = "INSERT INTO history (username , operation , description) VALUES (?, ?, ?)";
+                PreparedStatement ppSm = connection.prepareStatement(sql);
+                History h = new History("Swap",curAmount1.getText() +" "+ cur1Btn.getValue() + " converted to " + curAmount2.getText() +" "+ cur2Btn.getValue());
+                historyTableView.getItems().add(h);
+                ppSm.setString(1, Loginpage.user.getUserName());
+                ppSm.setString(2, h.getOperation());
+                ppSm.setString(3, h.getDescription());
+                ppSm.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 
     public void makeCurrencyTable (){
         photoColumn.setCellValueFactory( new PropertyValueFactory<>("photo"));
@@ -452,6 +701,19 @@ public class Dashboard implements Initializable {
             pstmt.setFloat(1, Float.parseFloat(amount.getText()));
             pstmt.executeUpdate();
 
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)) {
+            String sql = "INSERT INTO history (username , operation , description) VALUES (?, ?, ?)";
+            PreparedStatement ppSm = conn.prepareStatement(sql);
+            History h = new History("Transfer",amount.getText() + " " + Coin.getValue() + " were deposited into the " + wallet_id.getText() + " account");
+            historyTableView.getItems().add(h);
+            ppSm.setString(1, Loginpage.user.getUserName());
+            ppSm.setString(2, h.getOperation());
+            ppSm.setString(3, h.getDescription());
+            ppSm.executeUpdate();
         } catch (SQLException e) {
             System.err.println("Error: " + e.getMessage());
         }

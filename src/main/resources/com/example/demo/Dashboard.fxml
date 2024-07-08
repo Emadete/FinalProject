@@ -106,7 +106,7 @@
             <Image url="@images/calendar.png" />
          </image>
       </ImageView>
-      <AnchorPane fx:id="DashboardPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0">
+      <AnchorPane fx:id="DashboardPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
          <children>
             <AnchorPane layoutX="20.0" layoutY="25.0" prefHeight="484.0" prefWidth="658.0" style="-fx-background-color: #1d124c; -fx-background-radius: 15;">
                <children>
@@ -165,12 +165,12 @@
                      </font>
                   </Text>
                   <LineChart fx:id="chart" layoutX="8.0" layoutY="78.0" prefHeight="149.0" prefWidth="454.0" stylesheets="@chart.css">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis side="LEFT" />
-                    </yAxis>
+                     <xAxis>
+                        <CategoryAxis side="BOTTOM" />
+                     </xAxis>
+                     <yAxis>
+                        <NumberAxis side="LEFT" />
+                     </yAxis>
                   </LineChart>
                </children>
             </AnchorPane>
@@ -325,11 +325,7 @@
             </AnchorPane>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="exchangePane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
-         <children>
-            <Label layoutX="300.0" layoutY="250.0" text="exchange pane" />
-         </children>
-      </AnchorPane>
+      <AnchorPane fx:id="exchangePane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" />
       <AnchorPane fx:id="transferPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
          <children>
             <ImageView fitHeight="184.0" fitWidth="288.0" layoutX="390.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
@@ -378,7 +374,12 @@
       </AnchorPane>
       <AnchorPane fx:id="historyPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
          <children>
-            <Label layoutX="300.0" layoutY="250.0" text="history pane" />
+            <TableView fx:id="historyTableView" layoutX="30.0" layoutY="15.0" prefHeight="503.0" prefWidth="638.0" stylesheets="@TableView.css">
+              <columns>
+                  <TableColumn fx:id="operationColumn" prefWidth="89.5999755859375" text="operation" />
+                  <TableColumn fx:id="descriptionColumn" prefWidth="547.9999755859375" text="descriptoin" />
+              </columns>
+            </TableView>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="swapPane" layoutX="173.0" layoutY="62.0" prefHeight="534.0" prefWidth="698.0" visible="false">
@@ -404,17 +405,18 @@
                   <Line endX="235.5999755859375" layoutX="114.0" layoutY="260.0" startX="-100.0" stroke="#a393c2" />
                   <AnchorPane layoutX="12.0" layoutY="100.0" prefHeight="60.0" prefWidth="338.0" style="-fx-background-color: rgba(166, 142, 222,0.9); -fx-background-radius: 10;">
                      <children>
-                        <TextField layoutX="9.0" layoutY="27.0" prefHeight="27.0" prefWidth="122.0" promptText="currency amount" style="-fx-background-color: rgba(0,0,0,0); -fx-font: rba(10,0,50);">
+                        <TextField fx:id="curAmount1" layoutX="9.0" layoutY="27.0" prefHeight="27.0" prefWidth="122.0" promptText="currency amount" style="-fx-background-color: rgba(0,0,0,0);">
                            <font>
-                              <Font name="System Bold Italic" size="13.0" />
+                              <Font name="System Bold" size="13.0" />
                            </font>
                         </TextField>
-                        <Label layoutX="236.0" layoutY="5.0" prefHeight="18.0" prefWidth="96.0" text="Balance" />
-                        <Label layoutX="256.0" layoutY="27.0" prefHeight="27.0" prefWidth="66.0" text="Price" textFill="WHITE">
+                        <Label fx:id="balance1" layoutX="236.0" layoutY="5.0" prefHeight="18.0" prefWidth="96.0" text="Balance" />
+                        <Label fx:id="price1" layoutX="236.0" layoutY="27.0" prefHeight="27.0" prefWidth="66.0" text="Price" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
+                        <ChoiceBox fx:id="cur1Btn" layoutX="14.0" layoutY="5.0" prefHeight="26.0" prefWidth="115.0" />
                      </children>
                   </AnchorPane>
                   <Label layoutX="14.0" layoutY="237.0" text="Conversion Rate" textFill="#ffffff99">
@@ -422,7 +424,7 @@
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <Label layoutX="258.0" layoutY="237.0" prefHeight="15.0" prefWidth="84.0" text="Value" textFill="#ffffff99">
+                  <Label fx:id="conversionRate" layoutX="258.0" layoutY="237.0" prefHeight="15.0" prefWidth="84.0" text="Value" textFill="#ffffff99">
                      <font>
                         <Font size="10.0" />
                      </font>
@@ -432,23 +434,24 @@
                         <Font size="10.0" />
                      </font>
                   </Label>
-                  <Label layoutX="279.0" layoutY="268.0" prefHeight="18.0" prefWidth="70.0" text="Value" textFill="WHITE" />
+                  <Label fx:id="commission" layoutX="279.0" layoutY="268.0" prefHeight="18.0" prefWidth="70.0" text="Value" textFill="WHITE" />
                   <AnchorPane layoutX="14.0" layoutY="168.0" prefHeight="60.0" prefWidth="338.0" style="-fx-background-color: rgba(166, 142, 222,0.9); -fx-background-radius: 10;">
                      <children>
-                        <TextField layoutX="9.0" layoutY="27.0" prefHeight="27.0" prefWidth="122.0" promptText="currency amount" style="-fx-background-color: rgba(0,0,0,0); -fx-font: rba(10,0,50);">
+                        <TextField fx:id="curAmount2" editable="false" layoutX="9.0" layoutY="27.0" prefHeight="27.0" prefWidth="122.0" promptText="currency amount" style="-fx-background-color: rgba(0,0,0,0);">
                            <font>
-                              <Font name="System Bold Italic" size="13.0" />
+                              <Font name="System Bold" size="13.0" />
                            </font>
                         </TextField>
-                        <Label layoutX="236.0" layoutY="5.0" prefHeight="18.0" prefWidth="96.0" text="Balance" />
-                        <Label layoutX="256.0" layoutY="27.0" prefHeight="27.0" prefWidth="66.0" text="Price" textFill="WHITE">
+                        <Label fx:id="balance2" layoutX="236.0" layoutY="5.0" prefHeight="18.0" prefWidth="96.0" text="Balance" />
+                        <Label fx:id="price2" layoutX="236.0" layoutY="27.0" prefHeight="27.0" prefWidth="66.0" text="Price" textFill="WHITE">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="System Bold" size="13.0" />
                            </font>
                         </Label>
+                        <ChoiceBox fx:id="cur2Btn" layoutX="14.0" layoutY="5.0" prefHeight="26.0" prefWidth="115.0" />
                      </children>
                   </AnchorPane>
-                  <Button layoutX="162.0" layoutY="147.5" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 17.5; -fx-background-color: rgb(126, 104, 163); -fx-border-color: rgb(164, 135, 212); -fx-border-radius: 17.5;" textFill="#c9a7a7">
+                  <Button fx:id="swapCurBtn" layoutX="162.0" layoutY="147.5" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" style="-fx-background-radius: 17.5; -fx-background-color: rgb(126, 104, 163); -fx-border-color: rgb(164, 135, 212); -fx-border-radius: 17.5;" textFill="#c9a7a7">
                      <graphic>
                         <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -457,7 +460,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="15.0" layoutY="349.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="337.0" style="-fx-background-color: rgb(185, 27, 196); -fx-background-radius: 7;" text="Confirm" textAlignment="CENTER" textFill="WHITE">
+                  <Button layoutX="15.0" layoutY="349.0" mnemonicParsing="false" onAction="#confirmBtn" prefHeight="26.0" prefWidth="337.0" style="-fx-background-color: rgb(185, 27, 196); -fx-background-radius: 7;" text="Confirm" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="13.0" />
                      </font>
