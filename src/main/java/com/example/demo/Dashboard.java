@@ -20,8 +20,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.image.PixelReader;
-import javafx.scene.image.WritableImage;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Text;
@@ -36,7 +34,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -201,9 +198,13 @@ public class Dashboard implements Initializable {
 
     @FXML
     private ChoiceBox Coin;
+    @FXML
+    private ChoiceBox Coin11;
 
     @FXML
     private TextField amount;
+    @FXML
+    private TextField amount1;
 
     @FXML
     private Button doneBtn;
@@ -212,6 +213,9 @@ public class Dashboard implements Initializable {
     private ChoiceBox cur1Btn;
     @FXML
     private ChoiceBox cur2Btn;
+
+    @FXML
+    private ChoiceBox<String> Coin1;
 
     @FXML
     private TextField wallet_id;
@@ -324,6 +328,7 @@ public class Dashboard implements Initializable {
         initHistoryTabelView();
         makewallet();
         SwapPage swapPage = new SwapPage();
+        ExchangePage exchangePage = new ExchangePage();
 
         fullName.setText(Loginpage.user.getFirstname() + ' ' + Loginpage.user.getLastname()) ;
         usernametext.setText(Loginpage.user.getUserName());
@@ -342,6 +347,11 @@ public class Dashboard implements Initializable {
         updateDateTime();
         startDateTimeUpdate();
 
+        try {
+            ExportTableViewToExcel.exportData(historyTableView);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public void initHistoryTabelView (){
@@ -367,6 +377,27 @@ public class Dashboard implements Initializable {
             historyTableView.refresh();
         }catch (SQLException  ex) {
             System.err.println("Error: " + ex.getMessage());
+        }
+    }
+
+    public class ExchangePage {
+
+        public ExchangePage () {
+            initExchange();
+            setFormat();
+        }
+        private void initExchange () {
+        }
+
+        private void setFormat() {
+            UnaryOperator<Change> filter = change -> {
+                String text = change.getText();
+                if (text.matches("[0-9]*")) {
+                    return change;
+                }
+                return null;
+            };
+            amount1.setTextFormatter(new TextFormatter<>(filter));
         }
     }
 
