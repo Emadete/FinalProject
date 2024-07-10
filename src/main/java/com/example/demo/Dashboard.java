@@ -12,7 +12,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -39,6 +42,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.function.UnaryOperator;
 
@@ -277,6 +281,39 @@ public class Dashboard implements Initializable {
 
     @FXML
     private LineChart<?, ?> chart;
+
+    @FXML
+    private CategoryAxis xAxis;
+
+    @FXML
+    private NumberAxis yAxis;
+
+    @FXML
+    private AnchorPane tokenpane;
+
+    @FXML
+    private Text temp;
+
+    @FXML
+    private Text changecoin;
+
+    @FXML
+    private Text currentpricecoin;
+
+    @FXML
+    private Text totalcoin;
+
+    @FXML
+    private ImageView imagecoin;
+
+    @FXML
+    private Text shortnamecoin;
+
+    @FXML
+    private Text fullnamecoin;
+
+    @FXML
+    private LineChart<?, ?> chartcoin;
 
 
     private int selected = 1 ;
@@ -683,20 +720,447 @@ public class Dashboard implements Initializable {
                 swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
                 swapPane.setVisible(false);
             case 7:
-                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
                 prof.setVisible(false);
             case 8:
-                swapId.setStyle("-fx-background-color: #31297f; -fx-background-radius: 7;");
                 ProfilePane.setVisible(false);
+            case 9:
+                tokenpane.setVisible(false);
         }
     }
 
 
-    public void makechart(){}
+    public class CoinPricePredictor {
+
+        double currentPrices = generateData(100, 100.0, 10.0);
+        double futurePrices = generateData(100, 150.0, 20.0);
+
+        LinearRegression regression = new LinearRegression(currentPrices, futurePrices);
+        double slope = regression.getSlope();
+        double intercept = regression.getIntercept();
+
+        double currentPrice = 120.0;
+        double predictedPrice = predictPrice(currentPrice, slope, intercept);
+
+        private static double generateData(int numPoints, double mean, double std) {
+            Random rand = new Random();
+            double[] data = new double[numPoints];
+            for (int i = 0; i < numPoints; i++) {
+                data[i] = rand.nextGaussian() * std + mean;
+            }
+            return 1;
+        }
+
+        private static double predictPrice(double currentPrice, double slope, double intercept) {
+            return slope * currentPrice + intercept;
+        }
+    }
+
+    class LinearRegression {
+        private double currentPrices;
+        private double futurePrices;
+        private double slope;
+        private double intercept;
+
+        public LinearRegression(double currentPrices, double futurePrices) {
+            this.currentPrices = currentPrices;
+            this.futurePrices = futurePrices;
+            performLinearRegression();
+        }
+
+        private void performLinearRegression() {
+            int n = 10;
+            double sumX = 0, sumY = 0, sumXY = 0, sumXX = 0;
+
+            for (int i = 0; i < n; i++) {
+                sumX += currentPrices;
+                sumY += futurePrices;
+                sumXY += currentPrices * futurePrices;
+                sumXX += currentPrices * currentPrices;
+            }
+
+            slope = (n * sumXY - sumX * sumY) / (n * sumXX - sumX * sumX);
+            intercept = (sumY - slope * sumX) / n;
+        }
+
+        public double getSlope() {
+            return slope;
+        }
+
+        public double getIntercept() {
+            return intercept;
+        }
+    }
+
+
+    public void bitcoinBtn(ActionEvent event){
+
+        double BTCpr = 0 , BTCpr1 = 0;
+
+        closeMenu();
+        chartcoin.getData().clear();
+        imagecoin.setImage(new Image(Main.class.getResourceAsStream("/com/example/demo/images/Bitcoin.png")));
+        shortnamecoin.setText(BTC.getName());
+        fullnamecoin.setText("Bitcoin");
+        tokenpane.setVisible(true);
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            Time currentTime = new Time(new java.util.Date().getTime());
+            String query = "SELECT BTC FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 60 * 1000)+"' AND '"+currentTime+"'";
+            String sql = "SELECT BTC FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 3600 * 1000)+"' AND '"+new Time(currentTime.getTime()- 60 * 1000)+"'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            PreparedStatement preparedStatement1 = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet.next()){
+
+                BTCpr = resultSet.getDouble(1);
+
+            }
+            while (resultSet1.next()){
+
+                BTCpr1 = resultSet1.getDouble(1);
+
+            }
+
+            double delta = BTCpr1 - BTCpr;
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            changecoin.setText(decimalFormat.format(delta/100));
+            currentpricecoin.setText(Double.toString(BTCpr));
+            LinearRegression regression = new LinearRegression(BTCpr, BTCpr1);
+            XYChart.Series series = new XYChart.Series();
+            series.setName("Average price");
+            series.getData().add(new XYChart.Data("1" , BTCpr - delta));
+            series.getData().add(new XYChart.Data("2" , BTCpr - 2*delta));
+            series.getData().add(new XYChart.Data("3" , BTCpr - 3*delta));
+            series.getData().add(new XYChart.Data("4" , BTCpr));
+            series.getData().add(new XYChart.Data("5" , BTCpr + delta));
+            series.getData().add(new XYChart.Data("6" , BTCpr + 2*delta));
+            series.getData().add(new XYChart.Data("7" , BTCpr + 3*delta));
+            chartcoin.getData().add(series);
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void eteriumBtn(ActionEvent event){
+
+        double ETHpr = 0 , ETHpr1 = 0;
+
+        closeMenu();
+        chartcoin.getData().clear();
+        imagecoin.setImage(new Image(Main.class.getResourceAsStream("/com/example/demo/images/Eterium.png")));
+        shortnamecoin.setText(ETH.getName());
+        fullnamecoin.setText("Eterium");
+        tokenpane.setVisible(true);
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            Time currentTime = new Time(new java.util.Date().getTime());
+            String query = "SELECT ETH FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 60 * 1000)+"' AND '"+currentTime+"'";
+            String sql = "SELECT ETH FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 3600 * 1000)+"' AND '"+new Time(currentTime.getTime()- 60 * 1000)+"'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            PreparedStatement preparedStatement1 = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet.next()){
+
+                ETHpr = resultSet.getDouble(1);
+
+            }
+            while (resultSet1.next()){
+
+                ETHpr1 = resultSet1.getDouble(1);
+
+            }
+
+            double delta = ETHpr1 - ETHpr;
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            changecoin.setText(decimalFormat.format(delta/100));
+            currentpricecoin.setText(Double.toString(ETHpr));
+            LinearRegression regression = new LinearRegression(ETHpr, ETHpr1);
+            XYChart.Series series = new XYChart.Series();
+            series.setName("Average price");
+            series.getData().add(new XYChart.Data("1" , ETHpr - delta));
+            series.getData().add(new XYChart.Data("2" , ETHpr - 2*delta));
+            series.getData().add(new XYChart.Data("3" , ETHpr - 3*delta));
+            series.getData().add(new XYChart.Data("4" , ETHpr));
+            series.getData().add(new XYChart.Data("5" , ETHpr + delta));
+            series.getData().add(new XYChart.Data("6" , ETHpr + 2*delta));
+            series.getData().add(new XYChart.Data("7" , ETHpr + 3*delta));
+            chartcoin.getData().add(series);
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void tetherBtn(ActionEvent event){
+
+        double USDTpr = 0 , USDTpr1 = 0;
+
+        closeMenu();
+        chartcoin.getData().clear();
+        imagecoin.setImage(new Image(Main.class.getResourceAsStream("/com/example/demo/images/tether.png")));
+        shortnamecoin.setText(USDT.getName());
+        fullnamecoin.setText("Tether");
+        tokenpane.setVisible(true);
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            Time currentTime = new Time(new java.util.Date().getTime());
+            String query = "SELECT USDT FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 60 * 1000)+"' AND '"+currentTime+"'";
+            String sql = "SELECT USDT FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 3600 * 1000)+"' AND '"+new Time(currentTime.getTime()- 60 * 1000)+"'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            PreparedStatement preparedStatement1 = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet.next()){
+
+                USDTpr = resultSet.getDouble(1);
+
+            }
+            while (resultSet1.next()){
+
+                USDTpr1 = resultSet1.getDouble(1);
+
+            }
+
+            double delta = USDTpr1 - USDTpr;
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            changecoin.setText(decimalFormat.format(delta/100));
+            currentpricecoin.setText(Double.toString(USDTpr));
+            LinearRegression regression = new LinearRegression(USDTpr, USDTpr1);
+            XYChart.Series series = new XYChart.Series();
+            series.setName("Average price");
+            series.getData().add(new XYChart.Data("1" , USDTpr - delta));
+            series.getData().add(new XYChart.Data("2" , USDTpr - 2*delta));
+            series.getData().add(new XYChart.Data("3" , USDTpr - 3*delta));
+            series.getData().add(new XYChart.Data("4" , USDTpr));
+            series.getData().add(new XYChart.Data("5" , USDTpr + delta));
+            series.getData().add(new XYChart.Data("6" , USDTpr + 2*delta));
+            series.getData().add(new XYChart.Data("7" , USDTpr + 3*delta));
+            chartcoin.getData().add(series);
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void litecoinBtn(ActionEvent event){
+
+        double LTCpr = 0 , LTCpr1 = 0;
+
+        closeMenu();
+        chartcoin.getData().clear();
+        imagecoin.setImage(new Image(Main.class.getResourceAsStream("/com/example/demo/images/lightcoin.png")));
+        shortnamecoin.setText(LTC.getName());
+        fullnamecoin.setText("Litecoin");
+        tokenpane.setVisible(true);
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            Time currentTime = new Time(new java.util.Date().getTime());
+            String query = "SELECT LTC FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 60 * 1000)+"' AND '"+currentTime+"'";
+            String sql = "SELECT LTC FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 3600 * 1000)+"' AND '"+new Time(currentTime.getTime()- 60 * 1000)+"'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            PreparedStatement preparedStatement1 = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet.next()){
+
+                LTCpr = resultSet.getDouble(1);
+
+            }
+            while (resultSet1.next()){
+
+                LTCpr1 = resultSet1.getDouble(1);
+
+            }
+
+            double delta = LTCpr1 - LTCpr;
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            changecoin.setText(decimalFormat.format(delta/100));
+            currentpricecoin.setText(Double.toString(LTCpr));
+            LinearRegression regression = new LinearRegression(LTCpr, LTCpr1);
+            XYChart.Series series = new XYChart.Series();
+            series.setName("Average price");
+            series.getData().add(new XYChart.Data("1" , LTCpr - delta));
+            series.getData().add(new XYChart.Data("2" , LTCpr - 2*delta));
+            series.getData().add(new XYChart.Data("3" , LTCpr - 3*delta));
+            series.getData().add(new XYChart.Data("4" , LTCpr));
+            series.getData().add(new XYChart.Data("5" , LTCpr + delta));
+            series.getData().add(new XYChart.Data("6" , LTCpr + 2*delta));
+            series.getData().add(new XYChart.Data("7" , LTCpr + 3*delta));
+            chartcoin.getData().add(series);
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void avalanchBtn(ActionEvent event){
+
+        double AVAXpr = 0 , AVAXpr1 = 0;
+
+        closeMenu();
+        chartcoin.getData().clear();
+        imagecoin.setImage(new Image(Main.class.getResourceAsStream("/com/example/demo/images/Avalanch.png")));
+        shortnamecoin.setText(AVAX.getName());
+        fullnamecoin.setText("Avalanch");
+        tokenpane.setVisible(true);
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            Time currentTime = new Time(new java.util.Date().getTime());
+            String query = "SELECT AVAX FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 60 * 1000)+"' AND '"+currentTime+"'";
+            String sql = "SELECT LTC FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 3600 * 1000)+"' AND '"+new Time(currentTime.getTime()- 60 * 1000)+"'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            PreparedStatement preparedStatement1 = conn.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            while (resultSet.next()){
+
+                AVAXpr = resultSet.getDouble(1);
+
+            }
+            while (resultSet1.next()){
+
+                AVAXpr1 = resultSet1.getDouble(1);
+
+            }
+
+            double delta = AVAXpr1 - AVAXpr;
+            DecimalFormat decimalFormat = new DecimalFormat("#.##");
+            changecoin.setText(decimalFormat.format(delta/100));
+            currentpricecoin.setText(Double.toString(AVAXpr));
+            LinearRegression regression = new LinearRegression(AVAXpr, AVAXpr1);
+            XYChart.Series series = new XYChart.Series();
+            series.setName("Average price");
+            series.getData().add(new XYChart.Data("1" , AVAXpr - delta));
+            series.getData().add(new XYChart.Data("2" , AVAXpr - 2*delta));
+            series.getData().add(new XYChart.Data("3" , AVAXpr - 3*delta));
+            series.getData().add(new XYChart.Data("4" , AVAXpr));
+            series.getData().add(new XYChart.Data("5" , AVAXpr + delta));
+            series.getData().add(new XYChart.Data("6" , AVAXpr + 2*delta));
+            series.getData().add(new XYChart.Data("7" , AVAXpr + 3*delta));
+            chartcoin.getData().add(series);
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+    }
+
+    public void makechart(){
+
+        float wbtc = 0, weth = 0 , wusdt = 0 , wltc = 0 , wavax = 0;
+        double USDTpr = 0 , LTCpr = 0 , BTCpr = 0 , ETHpr = 0 , AVAXpr = 0;
+        double USDTpr1 = 0 , LTCpr1 = 0 , BTCpr1 = 0 , ETHpr1 = 0 , AVAXpr1 = 0;
+
+        String url = "jdbc:mysql://localhost:3306/exchangedb";
+        String username = "root";
+        String password = "123456";
+
+        chart.getData().clear();
+
+        try (Connection conn = DriverManager.getConnection(url, username, password)){
+
+            String query = "SELECT * FROM wallet WHERE username = '" + Loginpage.user.getUserName() + "'";
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()){
+
+                String wid = resultSet.getString("id");
+                wbtc = resultSet.getFloat("BTC");
+                weth = resultSet.getFloat("ETH");
+                wusdt = resultSet.getFloat("USDT");
+                wltc = resultSet.getFloat("LTC");
+                wavax = resultSet.getFloat("AVAX");
+
+            }
+
+            Time currentTime = new Time(new java.util.Date().getTime());
+            String sql = "SELECT * FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 60 * 1000)+"' AND '"+currentTime+"'";
+            String sql1 = "SELECT * FROM currency WHERE Time BETWEEN '"+new Time(currentTime.getTime()- 3600 * 1000)+"' AND '"+new Time(currentTime.getTime()- 60 * 1000)+"'";
+            PreparedStatement preparedStatement1 = conn.prepareStatement(sql);
+            PreparedStatement preparedStatement2 = conn.prepareStatement(sql1);
+            ResultSet resultSet1 = preparedStatement1.executeQuery();
+            ResultSet resultSet2 = preparedStatement2.executeQuery();
+            while (resultSet1.next()){
+
+                Date date = resultSet1.getDate(1);
+                Time time = resultSet1.getTime(2);
+                USDTpr = resultSet1.getDouble(3);
+                LTCpr = resultSet1.getDouble(4);
+                BTCpr = resultSet1.getDouble(5);
+                ETHpr = resultSet1.getDouble(6);
+                AVAXpr = resultSet1.getDouble(7);
+
+            }
+            while (resultSet2.next()){
+
+                Date date = resultSet2.getDate(1);
+                Time time = resultSet2.getTime(2);
+                USDTpr1 = resultSet2.getDouble(3);
+                LTCpr1 = resultSet2.getDouble(4);
+                BTCpr1 = resultSet2.getDouble(5);
+                ETHpr1 = resultSet2.getDouble(6);
+                AVAXpr1 = resultSet2.getDouble(7);
+
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error: " + e.getMessage());
+        }
+
+        double balance = (BTCpr * wbtc) + (USDTpr * wusdt) + (LTCpr * wltc) + (ETHpr * weth) + (AVAXpr * wavax);
+        double balance1 = (BTCpr1 * wbtc) + (USDTpr1 * wusdt) + (LTCpr1 * wltc) + (ETHpr1 * weth) + (AVAXpr1 * wavax);
+        double delta = balance1 - balance;
+
+        ObservableList<String> months = FXCollections.observableArrayList("Jan" , "Feb" , "Mar" , "Apr" , "May" , "June" , "July" , "Aug" , "Sep" , "Oct" , "Nov" , "Dec");
+        XYChart.Series series = new XYChart.Series();
+        series.setName("Balance");
+        series.getData().add(new XYChart.Data("July" , balance));
+        series.getData().add(new XYChart.Data("Apr" , balance - 3*delta));
+        series.getData().add(new XYChart.Data("May" , balance - 2*delta));
+        series.getData().add(new XYChart.Data("June" , balance - delta));
+        series.getData().add(new XYChart.Data("Aug" , balance + delta));
+        series.getData().add(new XYChart.Data("Sep" , balance + 2*delta));
+        series.getData().add(new XYChart.Data("Oct" , balance + 3*delta));
+        chart.getData().add(series);
+
+    }
 
     public void setBtn(ActionEvent event){
 
         setBtn.setVisible(false);
+        temp.setVisible(false);
         swid.setVisible(true);
         subBtn.setVisible(true);
 
@@ -705,6 +1169,7 @@ public class Dashboard implements Initializable {
     public void subBtn(ActionEvent event){
 
         setBtn.setVisible(true);
+        temp.setVisible(true);
         swid.setVisible(false);
         subBtn.setVisible(false);
 
@@ -760,6 +1225,8 @@ public class Dashboard implements Initializable {
     }
 
     public void makewallet(){
+
+        makechart();
 
         float wbtc = 0, weth = 0 , wusdt = 0 , wltc = 0 , wavax = 0;
         double USDTpr = 0 , LTCpr = 0 , BTCpr = 0 , ETHpr = 0 , AVAXpr = 0;

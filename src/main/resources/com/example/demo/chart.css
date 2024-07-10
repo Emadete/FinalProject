@@ -3,16 +3,17 @@
 }
 /* Customize gridlines */
 .chart-vertical-grid-lines {
-    -fx-stroke-width: 0.5; /* Set the width of vertical gridlines */
+    -fx-stroke-width: 0; /* Set the width of vertical gridlines */
     -fx-stroke: #DDDDDD; /* Set the color of vertical gridlines */
 }
 
 .chart-horizontal-grid-lines {
-    -fx-stroke-width: 0.5; /* Set the width of horizontal gridlines */
+    -fx-stroke-width: 0; /* Set the width of horizontal gridlines */
     -fx-stroke: #DDDDDD; /* Set the color of horizontal gridlines */
 }
-
-/* Customize axis labels */
-.axis {
-    -fx-stroke: transparent; /* Make the axis lines transparent */
+.chart-series-line {
+    -fx-stroke: #c34f5c;
+}
+.series {
+    border-radius: 10px; /* Set the radius to 10 pixels */
 }
